@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In · CloudRA</title>
+    <meta name="description" content="Sign in to access the CloudRA migration risk assessment dashboard.">
+    <link rel="stylesheet" href="static/fonts.css">
+    <link rel="stylesheet" href="static/landing.css">
+    <style>
+      .login-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+      }
+      .login-card {
+        background: var(--cream-bright);
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        padding: 3.5rem 3rem;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 30px 60px -40px rgba(44, 38, 32, 0.16);
+        position: relative;
+        z-index: 2;
+      }
+      .login-header {
+        text-align: center;
+        margin-bottom: 2.8rem;
+      }
+      .login-header .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+        color: var(--ink);
+        margin-bottom: 2rem;
+      }
+      .login-header h1 {
+        font-family: var(--font-display);
+        font-weight: 300;
+        font-size: 2rem;
+        color: var(--ink);
+        margin-bottom: 0.6rem;
+      }
+      .login-header h1 em {
+        font-style: italic;
+        color: var(--sage-deep);
+      }
+      .login-header p {
+        font-family: var(--font-display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 0.95rem;
+        color: var(--ink-mute);
+        line-height: 1.5;
+      }
+      .login-form label {
+        display: block;
+        margin-bottom: 1.8rem;
+      }
+      .login-form label span {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .login-form input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--line);
+        padding: 0.6rem 0;
+        font-family: var(--font-display);
+        font-weight: 300;
+        font-size: 1.15rem;
+        color: var(--ink);
+        border-radius: 0;
+        outline: none;
+        transition: border-color 400ms var(--ease-quiet);
+      }
+      .login-form input:focus {
+        border-color: var(--terracotta);
+      }
+      .login-form input::placeholder {
+        color: var(--ink-mute);
+        font-style: italic;
+        font-size: 0.95rem;
+      }
+      .login-btn {
+        width: 100%;
+        background: var(--ink);
+        color: var(--cream-bright);
+        border: none;
+        padding: 1.15rem 2rem;
+        font-family: var(--font-body);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        cursor: pointer;
+        border-radius: 99px;
+        margin-top: 0.6rem;
+        transition: all 500ms var(--ease-quiet);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+      }
+      .login-btn:hover {
+        background: var(--terracotta);
+      }
+      .login-btn .arrow {
+        transition: transform 400ms var(--ease-quiet);
+      }
+      .login-btn:hover .arrow {
+        transform: translateX(4px);
+      }
+      .login-error {
+        background: rgba(177, 106, 72, 0.08);
+        color: var(--terracotta-deep);
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 0.9rem;
+        padding: 0.8rem 1rem;
+        border-radius: 6px;
+        text-align: center;
+        margin-bottom: 1.4rem;
+        border: 1px solid rgba(177, 106, 72, 0.15);
+        display: none;
+      }
+      .login-error.is-visible {
+        display: block;
+      }
+      .login-back {
+        display: block;
+        text-align: center;
+        margin-top: 2rem;
+        font-family: var(--font-display);
+        font-style: italic;
+        font-size: 0.88rem;
+        color: var(--ink-mute);
+        text-decoration: none;
+        transition: color 300ms;
+      }
+      .login-back:hover {
+        color: var(--terracotta);
+      }
+      /* Decorative radials */
+      .login-page::before {
+        content: '';
+        position: absolute;
+        top: -10%; right: -10%;
+        width: 50%; height: 60%;
+        background: radial-gradient(circle, rgba(212, 165, 160, 0.25) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      .login-page::after {
+        content: '';
+        position: absolute;
+        bottom: -10%; left: -10%;
+        width: 50%; height: 60%;
+        background: radial-gradient(circle, rgba(138, 154, 135, 0.18) 0%, transparent 65%);
+        pointer-events: none;
+      }
+      @media (max-width: 600px) {
+        .login-card {
+          padding: 2.5rem 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grain"></div>
+
+    <div class="login-page">
+      <div class="login-card">
+        <div class="login-header">
+          <a href="index.html" class="brand">
+            <span class="brand__mark"></span>
+            <span class="brand__name">CloudRA</span>
+          </a>
+          <h1>Welcome <em>back.</em></h1>
+          <p>Sign in to access the risk assessment dashboard.</p>
+        </div>
+
+        <div id="login-error" class="login-error">
+          Invalid credentials. Please try again.
+        </div>
+
+        <form class="login-form" id="login-form">
+          <label>
+            <span>Username</span>
+            <input type="text" name="username" placeholder="Enter your username" autocomplete="username" required autofocus>
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+          </label>
+          <button type="submit" class="login-btn">
+            <span>Sign In</span>
+            <span class="arrow">→</span>
+          </button>
+        </form>
+        <a href="index.html" class="login-back">← Back to landing page</a>
+      </div>
+    </div>
+
+    <script>
+      // Check URL for error param
+      if (window.location.search.includes('error=1')) {
+        document.getElementById('login-error').classList.add('is-visible');
+      }
+    </script>
+  
+            <script>
+              document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const u = this.elements['username'].value;
+                const p = this.elements['password'].value;
+                if (u === 'admin' && p === 'admin') {
+                  localStorage.setItem('authenticated', 'true');
+                  window.location.href = 'dashboard.html';
+                } else {
+                  document.getElementById('login-error').classList.add('is-visible');
+                }
+              });
+              
+              if (window.location.search.includes('error=1')) {
+                document.getElementById('login-error').classList.add('is-visible');
+              }
+            </script>
+            </body>
+</html>

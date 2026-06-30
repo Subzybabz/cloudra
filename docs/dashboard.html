@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CloudRA · Cloud Risk Assessor</title>
+    <meta name="description" content="Automated cloud migration risk assessment database system using dynamic pricing and scoring.">
+    <link rel="stylesheet" href="static/fonts.css">
+    <link rel="stylesheet" href="static/styles.css">
+  </head>
+  <body>
+    <!-- Linen grain texture overlay -->
+    <div class="grain"></div>
+
+    <!-- Top Navigation Bar (Stillwater Inspired) -->
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a href="#top" class="brand">
+          <span class="brand__mark"></span>
+          <span class="brand__name">CloudRA</span>
+        </a>
+        <div class="topbar__actions">
+          <button type="button" id="btn-new-assessment" class="btn-new" aria-label="Start new assessment">
+            <span>New Assessment</span>
+            <span class="plus-icon">+</span>
+          </button>
+          <a href="index.html" class="btn-logout" title="Sign out">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            <span>Sign Out</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="app-container">
+
+      <!-- Left Panel: History Logs (Sleek Warm List) -->
+      <aside class="sidebar-panel">
+        <div class="sidebar-inner">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="history-search" placeholder="Search assessments..." aria-label="Search history log">
+          </div>
+
+          <div class="history-section">
+            <h3 class="panel-section-label">Completed Audits</h3>
+            <ul id="history-list"></ul>
+            <div id="history-empty-state" class="empty-state">
+              <p>No previous assessments found</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Panel: Workspace Form & Outcomes -->
+      <main class="workspace-panel">
+        <div class="workspace-inner">
+
+          <!-- Section Head / Intro Title (Stillwater Style) -->
+          <div class="section-head">
+            <span class="section-label">01 · Framework</span>
+            <h1 class="section-title">Assess your <em>migration risk.</em></h1>
+            <p class="section-lead">Input your parameters to calculate dynamic scores based on piecewise normalisation metrics and real-time pricing indicators.</p>
+          </div>
+
+          <!-- Dual Column Grid -->
+          <div class="workspace-grid">
+
+            <!-- Column 1: Config Parameters Form -->
+            <form id="assessment-form" class="form-container">
+              
+              <!-- Block: Project Identifier -->
+              <div class="stillwater-card">
+                <div class="card-header">
+                  <span class="card-num">01</span>
+                  <h3>Project Metadata</h3>
+                </div>
+                <div class="form-group-single">
+                  <label for="project_name">
+                    <span>Project Name</span>
+                    <input id="project_name" name="project_name" type="text" value="Enterprise Cloud Migration" required>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Block: Operational Dimension -->
+              <div class="stillwater-card">
+                <div class="card-header">
+                  <span class="card-num">02</span>
+                  <h3>Operational Complexity</h3>
+                </div>
+                <div class="form-grid">
+                  <label for="data_volume_tb">
+                    <span>Data Volume (TB)</span>
+                    <input id="data_volume_tb" name="data_volume_tb" type="number" min="0" step="0.1" value="15.0" required>
+                  </label>
+                  <label for="server_count">
+                    <span>Server Capacity</span>
+                    <input id="server_count" name="server_count" type="number" min="0" value="30" required>
+                  </label>
+                  <label for="app_complexity">
+                    <span>App Complexity</span>
+                    <select id="app_complexity" name="app_complexity">
+                      <option value="LOW">Low Dependency</option>
+                      <option value="MEDIUM" selected>Medium Dependency</option>
+                      <option value="HIGH">High Dependency</option>
+                      <option value="VERY_HIGH">Very High Dependency</option>
+                    </select>
+                  </label>
+                  <label for="migration_window_hrs">
+                    <span>Migration Window (hrs)</span>
+                    <input id="migration_window_hrs" name="migration_window_hrs" type="number" min="0" value="24" required>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Block: Financial Governance -->
+              <div class="stillwater-card">
+                <div class="card-header">
+                  <span class="card-num">03</span>
+                  <h3>Financial Governance</h3>
+                </div>
+                <div class="form-grid">
+                  <label for="resource_type">
+                    <span>EC2 Instance Type</span>
+                    <select id="resource_type" name="resource_type">
+                      <option value="EC2_SMALL">Small (t3.small)</option>
+                      <option value="EC2_MEDIUM" selected>Medium (t3.medium)</option>
+                      <option value="EC2_LARGE">Large (t3.large)</option>
+                      <option value="EC2_XLARGE">XLarge (t3.xlarge)</option>
+                    </select>
+                  </label>
+                  <label for="target_region">
+                    <span>AWS Region</span>
+                    <select id="target_region" name="target_region">
+                      <option value="us-east-1">US East (N. Virginia)</option>
+                      <option value="us-west-2">US West (Oregon)</option>
+                      <option value="eu-west-1" selected>EU (Ireland)</option>
+                      <option value="eu-west-2">EU (London)</option>
+                      <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                    </select>
+                  </label>
+                  <label for="egress_volume_tb">
+                    <span>Monthly Egress (TB)</span>
+                    <input id="egress_volume_tb" name="egress_volume_tb" type="number" min="0" step="0.1" value="2.0" required>
+                  </label>
+                  <label for="capex_monthly_usd">
+                    <span>On-Prem CapEx ($/mo)</span>
+                    <input id="capex_monthly_usd" name="capex_monthly_usd" type="number" min="0" value="3000" required>
+                  </label>
+                  <label for="projected_users">
+                    <span>Projected Users</span>
+                    <input id="projected_users" name="projected_users" type="number" min="0" value="500" required>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Block: Cybersecurity Posture -->
+              <div class="stillwater-card">
+                <div class="card-header">
+                  <span class="card-num">04</span>
+                  <h3>Cybersecurity Posture</h3>
+                </div>
+                <div class="form-grid">
+                  <label for="data_sensitivity">
+                    <span>Data Sensitivity</span>
+                    <select id="data_sensitivity" name="data_sensitivity">
+                      <option value="PUBLIC">Public Data</option>
+                      <option value="INTERNAL">Internal Data</option>
+                      <option value="CONFIDENTIAL" selected>Confidential</option>
+                      <option value="RESTRICTED">Restricted</option>
+                    </select>
+                  </label>
+                  <label for="iam_permissiveness">
+                    <span>IAM Permissiveness</span>
+                    <select id="iam_permissiveness" name="iam_permissiveness">
+                      <option value="LEAST_PRIV">Least Privilege</option>
+                      <option value="MODERATE" selected>Moderate Privilege</option>
+                      <option value="PERMISSIVE">Permissive</option>
+                      <option value="WILDCARD">Wildcard (broad)</option>
+                    </select>
+                  </label>
+                  <label for="encryption_posture">
+                    <span>Encryption Level</span>
+                    <select id="encryption_posture" name="encryption_posture">
+                      <option value="FULL" selected>Full Encryption</option>
+                      <option value="PARTIAL">Partial Encryption</option>
+                      <option value="TRANSIT_ONLY">Transit Only</option>
+                      <option value="NONE">None</option>
+                    </select>
+                  </label>
+                  <label for="compliance_scope">
+                    <span>Compliance Governance</span>
+                    <select id="compliance_scope" name="compliance_scope">
+                      <option value="NONE">No Governance Scope</option>
+                      <option value="SINGLE" selected>Single standard</option>
+                      <option value="MULTIPLE">Multiple frameworks</option>
+                      <option value="CRITICAL">Critical Compliance</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Form Submit Actions -->
+              <div class="form-actions">
+                <button type="submit" class="btn btn-terracotta" id="btn-submit">
+                  <span>Calculate Risk Profile</span>
+                  <span class="btn-arrow">→</span>
+                </button>
+                <span id="status-message" role="status"></span>
+              </div>
+            </form>
+
+            <!-- Column 2: Results and Calculations -->
+            <div class="results-container">
+              
+              <!-- Result Overview Card -->
+              <div class="stillwater-card highlight-card">
+                <div class="results-topbar">
+                  <div>
+                    <h2 id="active-project-title" class="project-title">Project Assessment</h2>
+                    <div class="badges-row">
+                      <span id="tier-badge" class="tier-badge tier-low">Low Risk</span>
+                      <span id="pricing-status-badge" class="pricing-badge pricing-offline">Cache (Offline)</span>
+                    </div>
+                  </div>
+                  <button type="button" id="btn-download-report" class="btn-pdf-download" title="Download Compliance Report PDF" style="display: none;">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Download Report</span>
+                  </button>
+                </div>
+
+                <!-- Large Scoreboard Showcase -->
+                <div class="scoreboard-hero">
+                  <div class="score-display">
+                    <span class="metric-label">Composite Risk</span>
+                    <div class="metric-big-num" id="composite-score">0.0</div>
+                  </div>
+                  <div class="score-display line-left">
+                    <span class="metric-label">Est. Cost Estimate</span>
+                    <div class="metric-big-cost" id="monthly-est-usd">$0.00 /mo</div>
+                  </div>
+                </div>
+
+                <!-- Sub-metrics Row -->
+                <div class="metrics-sub-row">
+                  <div class="sub-metric">
+                    <span class="sub-label">Operational</span>
+                    <span class="sub-score-num" id="operational-score">0.0</span>
+                  </div>
+                  <div class="sub-metric">
+                    <span class="sub-label">Financial</span>
+                    <span class="sub-score-num" id="financial-score">0.0</span>
+                  </div>
+                  <div class="sub-metric">
+                    <span class="sub-label">Cybersec</span>
+                    <span class="sub-score-num" id="cybersec-score">0.0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Graphic Visualizations Block -->
+              <div class="stillwater-card">
+                <div class="card-header">
+                  <span class="card-num">05</span>
+                  <h3>Risk Data Visualizations</h3>
+                </div>
+                <div class="visuals-grid">
+                  <div class="canvas-box">
+                    <h4>Composite Value Gauging</h4>
+                    <div class="canvas-wrap">
+                      <canvas id="gauge-chart" width="280" height="180"></canvas>
+                    </div>
+                  </div>
+                  <div class="canvas-box border-top-divider">
+                    <h4>Dimensional Distribution</h4>
+                    <div class="canvas-wrap">
+                      <canvas id="radar-chart" width="280" height="220"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actionable Recommendations Block -->
+              <div class="stillwater-card list-card">
+                <div class="card-header border-bottom">
+                  <span class="card-num">06</span>
+                  <h3>Mitigation Strategy Recommendations</h3>
+                </div>
+                <div class="recs-wrapper">
+                  <ul id="recommendation-list"></ul>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+
+    <!-- Breathing Risk Alignment Guide (Stillwater-aligned) -->
+    <div id="breath-guide" class="breath-guide is-in">
+      <div id="breath-orb" class="breath-orb"></div>
+      <div class="breath-info">
+        <span class="breath-label">Risk Alignment</span>
+        <span id="breath-phase" class="breath-phase">STEADY · OPTIMIZED</span>
+      </div>
+    </div>
+
+    <script src="static/app.js"></script>
+  
+            <script>
+              if (localStorage.getItem('authenticated') !== 'true') {
+                window.location.href = 'login.html';
+              }
+              // Set up mock PDF download button trigger
+              document.getElementById('btn-download-report').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Academic PDF Report Generation is supported locally via the ReportLab backend! In this static GitHub Pages preview, the PDF endpoint is simulated.');
+              });
+            </script>
+            </body>
+</html>
