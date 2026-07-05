@@ -197,18 +197,17 @@ def compile_thesis():
 
         # Parse cover page headings (everything before first chapter)
         if is_cover_page:
-            if block.startswith('## **DESIGN') or block.startswith('**ASSESSMENT'):
+            if block.startswith('## **Chapter 1**') or block.startswith('## **CHAPTER'):
+                is_cover_page = False
+                # Allow it to fall through to the chapter title parser below
+            elif block.startswith('## **DESIGN') or block.startswith('**ASSESSMENT'):
                 story.append(Spacer(1, 50))
                 story.append(Paragraph(block.replace('**', '').replace('##', '').strip(), cover_title_style))
                 continue
-            elif block.startswith('**BY**') or block.startswith('## **OGUNBANJO') or block.startswith('**23/') or block.startswith('**A PROJECT') or block.startswith('**IN PARTIAL') or block.startswith('**JUNE 2026'):
+            else:
                 story.append(Spacer(1, 15))
                 story.append(Paragraph(block.replace('**', '').replace('##', '').strip(), cover_info_style))
                 continue
-            elif block.startswith('## **Chapter 1**') or block.startswith('## **CHAPTER'):
-                is_cover_page = False
-                story.append(PageBreak())
-                # Fall through to chapter parsing
 
         # Parse Chapter titles
         if block.startswith('## **CHAPTER') or block.startswith('## **Chapter'):
