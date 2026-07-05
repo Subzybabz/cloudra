@@ -35,7 +35,7 @@ This application has been engineered to run **100% offline** for smooth, zero-la
 - **Fail-Safe Fallback**: If offline or credentials are not configured, the AWS pricing service falls back seamlessly to a local JSON cache with a 1.5s timeout.
 - **No JS CDN Dependencies**: Charts are drawn using native HTML5 Canvas 2D context algorithms. No external UI or charting libraries are loaded.
 - **Offline Fonts**: Variable font formats are loaded locally via `@font-face` mappings in `fonts.css`, ensuring the typography looks identical online or offline.
-- **Embedded Textures**: The organic linen grain background is embedded directly in [styles.css](file:///c:/Users/HP/Documents/Codex/2026-06-27/this/frontend/styles.css) as a local base64 SVG data URI.
+- **Embedded Textures**: The organic linen grain background is embedded directly in `frontend/styles.css` as a local base64 SVG data URI.
 
 ---
 
@@ -75,7 +75,7 @@ If you want the dashboard to show live price queries instead of the cached table
    Set the Default Region to `us-east-1` (the AWS pricing endpoint is only hosted there).
 
 ### 5. Running the Tests
-To execute the automated verification test suite (52 tests checking scoring ranges, fallbacks, database transactions, login routing, session status, and PDF generation):
+To execute the automated verification test suite (54 tests checking scoring ranges, fallbacks, database transactions, login routing, session status, and PDF generation):
 ```bash
 pytest -v
 ```

@@ -35,3 +35,8 @@ desktop.ini
 # Gemini agent data
 .gemini/
 .agents/
+
+# Temporary / empty directories
+scratch/
+outputs/
+work/
