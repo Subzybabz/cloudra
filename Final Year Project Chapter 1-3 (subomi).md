@@ -1,4 +1,3 @@
-1 
 
 ## **DESIGN AND IMPLEMENTATION OF A CLOUD MIGRATION RISK** 
 
@@ -18,7 +17,6 @@
 
 **JUNE 2026.** 
 
-2 
 
 ## **Chapter 1** 
 
@@ -30,7 +28,6 @@ The modern enterprise is undergoing a profound technological transformation; one
 
 Historically, organisations have managed their IT needs by investing in physical infrastructure housed within their own facilities or dedicated co-location data centres. This model is characterised by large upfront capital investments in hardware, software licences, and skilled personnel, providing organisations with complete control over their computing environments. However, it also imposed significant limitations such as scaling capacity required lengthy procurement cycles and substantial capital expenditure, maintaining hardware demanded specialist expertise and continuous operational overhead, and geographic redundancy or disaster recovery required the duplication of entire infrastructure stacks at secondary sites. These limitations became increasingly problematic as the pace of digital commerce accelerated and the demand for agile, globally accessible systems 
 
-3 
 
 intensified. 
 
@@ -38,13 +35,11 @@ Cloud computing emerged as the answer to these limitations. Pioneered by provide
 
 The commercial adoption of cloud computing has grown at a remarkable pace. According to the Flexera State of the Cloud Report (2023), over 92% of enterprises now operate in multicloud environments with global cloud infrastructure spending exceeding $200 billion in 2022. Organisations across all sectors from the finance and healthcare to education, manufacturing, and the public sectors are actively migrating their workloads from on-premise systems to cloud environments. The drivers of this migration are well-documented; cloud platforms offer elastic scalability that allow organisations to rapidly expand or contract their computational capacity in response to demand. They also provide geographic redundancy and high-availability architectures that would be prohibitively expensive to replicate onpremise. They enable organisations to access cutting-edge technologies such as machine learning, big data analytics, and serverless computing without building bespoke infrastructure. They also offer a consumption-based financial model that converts large, irregular capital expenditures into predictable, manageable operational costs. 
 
-4 
 
 Despite the compelling strategic advantages of cloud adoption, the process of migrating existing IT infrastructure from on-premise environments to the cloud is far from straightforward. Cloud migration is a deeply complex, multidimensional undertaking that involves not merely the technical act of moving data and applications from one location to another, but a comprehensive re-engineering of how an organisation's IT systems are architected, secured, managed, and funded. Each migration project is unique, shaped by the organisation's specific combination of legacy systems, application dependencies, data sensitivity requirements, compliance obligations, financial constraints, and technical expertise. The complexity of this process is compounded by the fundamental differences between on-premise and cloud computing environments- the cloud operates on a shared, virtualised infrastructure governed by a Shared Responsibility Model where security and compliance obligations are distributed between the cloud provider and the customer in ways that are often poorly understood by organisations making the transition. 
 
 The risks associated with cloud migration are well-documented and span three principal dimensions. Operationally, migration projects are vulnerable to system downtime, data corruption or loss during transfer, network reconfiguration errors, and the disruption of application services due to unmapped dependencies between systems. The financial dimension of migration risk is equally significant; the transition from a Capital Expenditure (CapEx) model where IT costs are fixed, predictable, and depreciated over time to an Operational Expenditure (OpEx) model where costs fluctuate based on dynamic, usage-based cloud billing introduces significant financial forecasting complexity. Organisations that do not rigorously model their projected cloud consumption frequently experience what the industry has termed "cloud bill shock"- the receipt of unexpectedly high cloud invoices driven by over-provisioned resources, unanticipated data egress fees, and the cumulative cost of services inadvertently left running. The Flexera (2023) report found that organisations waste 
 
-5 
 
 an average of 32% of their total cloud spend, a direct consequence of inadequate premigration financial planning. 
 
@@ -54,7 +49,6 @@ Recognising and quantifying these multidimensional risks: **Operational, Financi
 
 This study is motivated by the recognition that there exists a critical procedural gap in the field of IT project management and cloud governance: the absence of an automated, datadriven, web-based tool capable of dynamically assessing cloud migration risk across 
 
-6 
 
 operational, financial, and cybersecurity dimensions simultaneously, and translating that assessment into a quantified, actionable risk score supported by specific mitigation recommendations. This project addresses that gap by designing, developing, and deploying precisely such a system- a serverless, API-driven risk assessment web application built on Amazon Web Services, capable of evaluating migration parameters in real time against live cloud pricing data and established security benchmarks, and generating compliance-grade audit reports suitable for distribution to project stakeholders and executive leadership. 
 
@@ -64,7 +58,6 @@ Despite the scale and complexity of cloud migration as an enterprise undertaking
 
 The predominant approach to cloud migration risk assessment in current practice is the static risk register- a document that is typically maintained in spreadsheet form, that catalogues identified risks, assigns subjective likelihood and impact ratings, and records planned mitigation actions. While universally adopted in project management practice, static risk registers are structurally unsuited to the demands of cloud migration assessment. They are point-in-time documents that capture the state of identified risks at the moment of their creation but are rarely updated with sufficient frequency to remain relevant throughout the duration of a migration project. They rely on qualitative, subjective ratings typically expressed as **High, Medium, or Low** that lack the quantitative rigour necessary for financial forecasting or executive decision-making. Most critically, they cannot integrate with live data sources, they cannot query real-time cloud pricing APIs to reflect current cost models, nor 
 
-7 
 
 can they evaluate the specific configuration of a proposed cloud environment against current security compliance benchmarks. The result is a significant and dangerous gap between the static picture presented in the risk register and the dynamic reality of the cloud environment being deployed. 
 
@@ -72,7 +65,6 @@ From a security perspective, the paradigm shift from traditional, perimeter-base
 
 The financial dimension of the problem is equally acute. The transition from a Capital Expenditure (CapEx) model to an Operational Expenditure (OpEx) model fundamentally changes how IT costs are incurred and accounted for. On-premise hardware costs are fixed, predictable, and depreciated over multi-year cycles, making them relatively straightforward to budget. Cloud costs, by contrast, are variable and consumption-based- accruing on a persecond, per-request, or per-gigabyte basis and can fluctuate dramatically based on usage 
 
-8 
 
 patterns, data transfer volumes, and the configuration of cloud services. Traditional IT budgeting tools, which are designed around fixed-cost assumptions, are fundamentally inadequate for modelling the elastic, usage-based billing of cloud environments. Manual calculators and spreadsheet models cannot accurately simulate the complex interaction of computational costs, storage costs, data egress fees, and the potential for runaway spending caused by auto-scaling resources that exceed their intended limits. This inadequacy directly contributes to the widespread phenomenon of cloud bill shock, where misprovisioned resources and unanticipated fees cause recurring cloud costs to severely outpace initial projections. 
 
@@ -80,7 +72,6 @@ Operationally, cloud migration projects require a sophisticated analysis of data
 
 Ultimately, the absence of an integrated, API-driven risk assessment engine that can dynamically evaluate these operational, financial, and cybersecurity dimensions simultaneously and translate the results into a unified, quantified risk score with actionable mitigation guidance represents a critical void in current IT project management practice. Without such a system, organisations undertaking cloud migration remain fundamentally exposed to the risk of systemic project failure, with consequences that may include reputational damage from publicised data breaches, regulatory sanctions for compliance 
 
-9 
 
 violations, and financial losses from service disruptions and cost overruns. This study is designed to address this void directly. 
 
@@ -100,7 +91,6 @@ To achieve the primary aim, the study pursues the following specific objectives:
 
 3. To engineer a serverless backend infrastructure on Amazon Web Services (AWS), utilising AWS API Gateway and Python-based AWS Lambda functions, to process risk assessment requests with high availability, automatic scalability, and minimal operational overhead. 
 
-10 
 
 4. To implement a proprietary, three-dimensional risk scoring algorithm that evaluates submitted migration parameters across operational, financial, and cybersecurity risk dimensions, incorporating live AWS pricing data retrieved via the Boto3 SDK to ensure that financial risk scores reflect current market rates. 
 
@@ -116,7 +106,6 @@ The rationale for this study is grounded in the convergence of three critical re
 
 Cloud migration has transitioned from a technology experiment to a strategic imperative for organisations across all sectors. The global cloud computing market is projected to exceed $1 trillion by 2026 (Gartner, 2022), and the pressure on IT leaders to migrate workloads to the cloud driven by the competitive advantages of scalability, agility, and access to advanced 
 
-11 
 
 cloud-native services is intense and growing. Yet, the complexity of cloud migration has not diminished with the maturation of cloud platforms; if anything, the increasing sophistication of cloud architectures, the proliferation of cloud services, and the evolving landscape of cloud security threats have made the risk management challenge more demanding, not less. 
 
@@ -126,7 +115,6 @@ The existing landscape of cloud migration risk assessment tools is demonstrably 
 
 The justification for a serverless, API-driven approach to this problem is also well-founded. The use of AWS Lambda and API Gateway for the backend compute layer means that the system can scale automatically to accommodate concurrent assessment requests without 
 
-12 
 
 requiring the provisioning or management of server infrastructure- a design choice that eliminates a class of operational risk and reduces the total cost of system ownership. The integration of live AWS pricing data via the Boto3 SDK addresses a specific and critical gap identified in the literature; the inability of existing tools and academic models to provide financial risk scores that reflect current, real-time cloud pricing rather than static pricing tables that rapidly become outdated. 
 
@@ -140,7 +128,6 @@ This study makes significant contributions at multiple levels- **practical, orga
 
 **For Project Managers** , the system transforms the risk assessment process from a reactive, subjective exercise into a predictable, data-backed discipline. Rather than relying on expert judgment and experience to estimate the risks associated with a proposed migration, project managers can submit specific, quantifiable migration parameters and receive a computed risk score calibrated against empirically established thresholds. **The interactive dashboard** 
 
-13 
 
 **categorises risks as High, Medium, or Low across Operational, Financial, And Cybersecurity dimensions** , enabling project managers to identify the dominant sources of vulnerability in their migration plans and allocate resources, adjust timelines, and apply targeted mitigation strategies before the migration cutover begins- a shift from reactive crisis management to proactive risk governance. 
 
@@ -150,7 +137,6 @@ This study makes significant contributions at multiple levels- **practical, orga
 
 **For Executive Leadership** , including Chief Information Officers (CIOs), Chief Technology Officers (CTOs), and Chief Financial Officers (CFOs), the system translates complex, multidimensional technical vulnerabilities into clear, quantified business risks expressed on a simple 0-to-100 scale. This level of transparency empowers C-suite decision-makers to evaluate the true Return on Investment (ROI) of a proposed cloud migration, assess whether 
 
-14 
 
 the identified risk profile falls within the organisation's established risk appetite, and make strategically informed decisions about the timing, scope, and approach of their migration projects. 
 
@@ -164,7 +150,6 @@ In terms of technical scope, the study encompasses the full development lifecycl
 
 In terms of cloud platform scope, the system's dynamic, programmatic data retrieval via the Boto3 SDK is scoped exclusively to Amazon Web Services. The system evaluates migration parameters in the context of AWS cloud environments and retrieves real-time pricing data 
 
-15 
 
 from the AWS Price List API. Integration with other cloud providers such as Microsoft Azure or Google Cloud Platform is explicitly out of scope. 
 
@@ -180,7 +165,6 @@ While this study makes a significant and practical contribution to the field of 
 
 First, the system's dynamic pricing integration is limited to Amazon Web Services. The realtime AWS Price List API retrieval via Boto3 ensures that financial risk scores reflect current 
 
-16 
 
 AWS On-Demand pricing but organisations considering migration to Microsoft Azure or Google Cloud Platform cannot rely on the system's financial risk sub-score for accurate cost modeling for those platforms. This single-cloud focus, while a deliberate scope decision, limits the system's applicability for organisations pursuing multi-cloud or non-AWS migration strategies. 
 
@@ -190,7 +174,6 @@ Third, the user acceptance testing was conducted with a panel of five evaluators
 
 Fourth, the system assesses risk based on parameters provided by the user through the input form. The accuracy of the risk assessment is therefore dependent on the accuracy and completeness of the information provided. If a user incorrectly estimates their data volume, misclassifies their data sensitivity, or inaccurately describes their IAM configuration, the resulting risk scores will reflect those inaccuracies. The system does not perform automated discovery of the user's actual infrastructure characteristics; it relies entirely on self-reported parameters. 
 
-17 
 
 Fifth, while the system generates actionable mitigation recommendations, these recommendations are drawn from a fixed knowledge base populated from AWS best practice documentation and established security frameworks. They may not account for organisationspecific constraints, proprietary legacy systems, or highly specialised compliance requirements that fall outside the scope of the standard frameworks consulted. 
 
@@ -204,7 +187,6 @@ Following the requirements analysis phase, the system architecture was designed 
 
 The development phase adopted Agile software development principles to facilitate iterative implementation, testing, and refinement of system components. The risk scoring engine was designed to evaluate migration projects across three dimensions: operational risk, financial 
 
-18 
 
 risk, and cybersecurity risk. These risk dimensions were subsequently integrated into a composite risk model for overall risk classification. 
 
@@ -220,7 +202,6 @@ The adoption of **Design Science Research** ensures that the study not only cont
 
 This project report is organised into five chapters, each addressing a specific aspect of the study. 
 
-19 
 
 **Chapter One** presents the introduction to the study. It discusses the background of the study, statement of the problem, aims and objectives, rationale and justification, significance of the study, scope, limitations, methodology, organisation of the study, and definitions of key terms. 
 
@@ -238,7 +219,6 @@ The following definitions are provided to ensure clarity and consistency in the 
 
 **Amazon Web Services (AWS)** : A comprehensive and broadly adopted cloud computing platform offered by Amazon, providing over 200 fully featured cloud services including 
 
-20 
 
 computing power, storage, databases, networking, analytics, machine learning, and security tools, delivered from data centres globally. 
 
@@ -254,7 +234,6 @@ computing power, storage, databases, networking, analytics, machine learning, an
 
 **Cloud Migration** : The process of moving digital assets including applications, data, workloads, and IT processes from on-premise data centres or legacy systems to a cloud computing environment. 
 
-21 
 
 **Composite Risk Score:** The single numerical score produced by the risk scoring algorithm, calculated as a weighted sum of the three dimensional sub-scores (Operational, Financial, and Cybersecurity), expressed on a normalised scale of 0 to 100. 
 
@@ -270,7 +249,6 @@ computing power, storage, databases, networking, analytics, machine learning, an
 
 **Risk Score** : A numerical value representing the assessed level of risk associated with a specific dimension or the overall migration project. In this study, risk scores are expressed on a normalised 0 to 100 scale, where higher values indicate greater risk exposure. 
 
-22 
 
 **Serverless Architecture** : A cloud computing execution model in which the cloud provider dynamically manages the allocation and provisioning of servers. Developers deploy code without provisioning or managing any server infrastructure, and are billed only for the actual compute time consumed during execution. 
 
@@ -284,7 +262,6 @@ computing power, storage, databases, networking, analytics, machine learning, an
 
 This chapter provides an extensive and critical review of the existing body of knowledge that informs every design decision embedded in the Cloud Migration Risk Assessment System developed in this study. The review is organised into ten thematic areas: **The Foundational Concepts and Service Models Of Cloud Computing, The Strategic Frameworks and** 
 
-23 
 
 **Well-documented Operational Challenges of Cloud Migration, The Theoretical Basis and Practical Limitations of Established IT Risk Management Methodologies, The Cloud Security Governance Frameworks, Identity Management Paradigms, and** 
 
@@ -302,7 +279,6 @@ Cloud computing represents a fundamental paradigm shift in the delivery, consump
 
 The National Institute of Standards and Technology (NIST), whose definition is the most widely cited and adopted in both academic and industry discourse, describes cloud computing 
 
-24 
 
 as a model for enabling convenient, on-demand network access to a shared pool of configurable computing resources that can be rapidly provisioned and released with minimal management effort or service provider interaction (Mell & Grance, 2011). This concise definition encapsulates five essential characteristics that collectively distinguish cloud computing from all prior IT delivery models. 
 
@@ -310,7 +286,6 @@ The first essential characteristic is on-demand self-service; a cloud consumer c
 
 These five characteristics, taken together, explain why cloud computing has supplanted traditional on-premise IT models as the dominant paradigm for enterprise computing. They enable a level of agility, cost-efficiency, and global scalability that was simply not achievable within the confines of organisation-owned data centres. However, they also introduce a 
 
-25 
 
 distinctive set of risks particularly around security, cost management, and operational continuity- that are the subject of this study. 
 
@@ -322,7 +297,6 @@ Cloud computing is offered through three primary service models, each of which p
 
 **Platform as a Service (PaaS)** abstracts the underlying infrastructure further- providing a managed environment in which developers can build, deploy, test, and manage applications without concerning themselves with the provisioning or management of servers, storage, or operating systems. The provider manages the infrastructure, operating systems, middleware, and runtime environments; the customer manages applications and data. AWS Elastic Beanstalk, Google App Engine, and Microsoft Azure App Service are widely used PaaS platforms. PaaS reduces operational burden but constrains the customer's control over the underlying execution environment, introducing a different class of dependency risk. **Software as a Service (SaaS)** represents the highest level of abstraction, delivering fully 
 
-26 
 
 managed, ready-to-use software applications over the internet. In the SaaS model, the provider manages the entire technology stack- infrastructure, platforms, applications, and data management while the customer accesses the application through a web browser or API. Microsoft 365, Google Workspace, Salesforce, and ServiceNow are archetypal SaaS offerings. SaaS eliminates infrastructure management overhead entirely but provides the least control over data residency, security configuration, and application architectureconsiderations of particular importance for organisations subject to strict data sovereignty regulations. 
 
@@ -330,7 +304,6 @@ managed, ready-to-use software applications over the internet. In the SaaS model
 
 Cloud environments are further classified by deployment model, each representing a different balance between control, scalability, and cost efficiency. A public cloud is operated by a thirdparty provider and delivers services over the internet to multiple customers who share the same underlying physical infrastructure, benefiting from massive economies of scale and a pay-as-you-go financial model. A private cloud is provisioned exclusively for a single organization- either on-premise within the organisation's own data centre or in a dedicated, hosted environment offering greater control, customisation, and data sovereignty at the cost of reduced scalability and higher operational overhead. A hybrid cloud combines elements of both models; enabling organisations to retain sensitive or regulated workloads on-premise or in a private cloud while leveraging the scalability and cost-efficiency of the public cloud for less sensitive, variable, or burst workloads (Buyya et al., 2009). A community cloud is a less common deployment model in which infrastructure is shared among several organisations with common concerns such as regulatory compliance or mission and may be managed by the organisations themselves, a third party, or a combination. The risk assessment system developed in this study is designed primarily for the most commercially prevalent and 
 
-27 
 
 operationally complex migration scenario: the transition from on-premise private infrastructure to a public cloud environment hosted on Amazon Web Services. 
 
@@ -354,7 +327,6 @@ operationally complex migration scenario: the transition from on-premise private
 
 Cloud migration is the process of moving an organisation's digital assets- encompassing applications, databases, workloads, IT processes, and in many cases entire operating 
 
-28 
 
 environments, from on-premise data centres or legacy computing systems to a cloud computing environment. It is crucial to understand from the outset that cloud migration is not a discrete, atomic event but a complex, iterative, and phased undertaking that may span months or years depending on the size, heterogeneity, and interdependence of the systems being migrated. The complexity of this undertaking is compounded by the fundamental heterogeneity of enterprise IT environments which typically includes a mixture of legacy applications with undocumented dependencies, proprietary hardware configurations, tightly coupled data pipelines, and bespoke integration layers accumulated over decades of IT investment. As a consequence, straightforward, like-for-like migration- simply moving an application from a physical server to a virtual machine in the cloud without modification is extremely rare for production enterprise workloads. Almost every meaningful enterprise migration requires some degree of adaptation, re-engineering, or re-architecting of existing systems to function correctly, securely, and cost-efficiently in the cloud environment (Gartner, 2019). 
 
@@ -371,7 +343,6 @@ These six strategies represent the spectrum of possible migration approaches, ra
 
 
 
-29 
 
 ||||||
 |---|---|---|---|---|
@@ -388,7 +359,6 @@ These six strategies represent the spectrum of possible migration approaches, ra
 
 
 
-30 
 
 ## **Table 2.2: The 6Rs Cloud** 
 
@@ -404,7 +374,6 @@ These six strategies represent the spectrum of possible migration approaches, ra
 
 One of the most pervasive and consistently underestimated challenges in enterprise cloud migration is the accurate identification and documentation of application dependencies; the network of relationships between applications, databases, middleware components, APIs, and 
 
-31 
 
 infrastructure elements that must function correctly in concert for a given application to operate as intended. In many enterprise environments, particularly those that have evolved organically over long periods, application dependencies are poorly documented or entirely undocumented, meaning that the full dependency graph of a given system can only be discovered through runtime network traffic analysis, agent-based infrastructure discovery, or direct interrogation of application owners (Jamshidi et al., 2013). The failure to accurately map application dependencies before migration is a leading cause of post-migration failures; applications that function correctly in isolation may fail catastrophically when separated from dependent services that have not yet been migrated, or when the network latency between them increases as a consequence of geographic separation in the cloud. The migration complexity parameter captured in the risk assessment system developed in this study directly quantifies the assessed complexity of an organisation's application dependency landscape, and this parameter carries a weight of 30% in the Operational Risk sub-score- reflecting the central importance of dependency management to migration success. 
 
@@ -412,7 +381,6 @@ infrastructure elements that must function correctly in concert for a given appl
 
 The concept of data gravity first articulated by Dave McCrory (2010) describes the tendency of large datasets to attract and accumulate dependent services, applications, and processing workloads, creating a form of organisational inertia that makes these datasets difficult and expensive to move. For organisations with very large data estates- multiterabyte or petabytescale datasets; data gravity presents a fundamental migration challenge; the physical transfer of large volumes of data to the cloud can take days or weeks over standard internet connections, during which time data consistency must be maintained between the source and target environments. AWS offers services such as AWS Snowball- a petabyte-scale physical data transfer device, and AWS DataSync- a managed online data transfer service to address this challenge, but the logistical complexity and the risk of data loss or corruption during 
 
-32 
 
 transfer remain significant. The data volume parameter in the Operational Risk sub-score of this study's algorithm directly addresses this dimension of migration risk, with larger data volumes mapped to higher operational risk contributions using a piecewise linear normalisation function calibrated against IDC migration scale classifications. 
 
@@ -426,13 +394,11 @@ The financial consequences of cloud migration failures are well-evidenced in ind
 
 Risk management in the context of information technology projects is the structured, systematic process of identifying, assessing, and responding to risks that could adversely affect the achievement of project objectives within the bounds of cost, schedule, scope, and 
 
-33 
 
 quality. The ISO 31000:2018 Risk Management standard- the international standard for risk management principles and guidelines, defines risk as 'the effect of uncertainty on objectives', and risk management as the coordinated activities undertaken to direct and control an organisation with regard to risk. In the context of IT projects, risk management encompasses four sequential but iterative activities; Risk Identification which involves the comprehensive cataloguing of all events or conditions that could adversely affect project outcomes, Risk Assessment which involves evaluating the likelihood and potential impact of each identified risk, Risk Response Planning that involves developing strategies to reduce the probability or impact of risks deemed unacceptable, and Risk Monitoring And Control which involves continuously tracking identified risks, identifying new risks, and evaluating the effectiveness of response strategies throughout the project lifecycle (ISO, 2018). 
 
 Several established frameworks provide structured guidance for IT risk management practice. NIST Special Publication 800-30 (Guide for Conducting Risk Assessments) provides a systematic, repeatable methodology for evaluating the risks associated with information systems, incorporating threat identification, vulnerability assessment, impact analysis, and risk determination. COBIT 5 (Control Objectives for Information and Related Technologies), published by ISACA, provides a comprehensive governance and management framework for enterprise IT that includes detailed risk management guidance integrated with business objectives and compliance requirements. The Project Management Institute's PMBOK Guide identifies risk management as one of ten core project management knowledge areas, encompassing risk planning, identification, qualitative analysis, quantitative analysis, response planning, and monitoring and control. The Factor Analysis of Information Risk (FAIR) model provides a quantitative approach to cybersecurity risk analysis by decomposing risk into its constituent factors; threat event frequency, threat capability, 
 
-34 
 
 vulnerability, and loss magnitude- and modelling their interactions using probabilistic methods. 
 
@@ -444,7 +410,6 @@ Quantitative Risk Assessment (QRA) methods apply numerical values to risk likeli
 
 vulnerabilities based on their exploitability, scope of impact, and potential consequences. The risk scoring algorithm developed in this study is grounded in quantitative risk assessment 
 
-35 
 
 principles; it assigns empirically calibrated numerical weights to migration parameters across three risk dimensions and computes a composite risk score on a 0-to100 normalised scale, providing a single, objective, and financially interpretable measure of a proposed migration's risk exposure. 
 
@@ -454,7 +419,6 @@ Despite the widespread acknowledgement of quantitative risk assessment's superio
 
 The most fundamental limitation of the static risk register is that it is a snapshot document; it captures the state of identified risks at a particular moment in time and is typically updated only at fixed project milestones often no more frequently than weekly or fortnightly. In cloud environments, where configurations can be changed in seconds, pricing models are updated without notice, and new security vulnerabilities are disclosed daily, a risk register that was accurate at the time of its creation may be dangerously outdated by the time the migration team acts on it. Bannerman (2008) demonstrated in a longitudinal study of IT project risk management practices that risk registers are often maintained as compliance artefacts- created to satisfy governance requirements at project initiation rather than as living decision-support 
 
-36 
 
 tools that are actively maintained and consulted throughout the project lifecycle. This finding, replicated in subsequent studies by Kutsch and Hall (2010), suggests that the widespread adoption of risk registers does not necessarily translate into effective, real-time risk management in practice. 
 
@@ -477,7 +441,6 @@ A second critical limitation is the qualitative, subjective nature of the rating
 
 
 
-37 
 
 |||||
 |---|---|---|---|
@@ -507,13 +470,11 @@ A second critical limitation is the qualitative, subjective nature of the rating
 
 ## **2.4.1 The Shared Responsibility Model in Depth** 
 
-38 
 
 The Shared Responsibility Model is the foundational security governance framework that defines how security and compliance obligations are divided between cloud service providers and their customers. In the AWS implementation of this model- the most comprehensively documented and widely adopted version, the division of responsibility is expressed through the distinction between 'security of the cloud' and 'security in the cloud'. AWS is responsible for the security of the cloud; the physical security of its global data centre facilities, the integrity and security of the hardware infrastructure (servers, storage, networking equipment), the managed hypervisor layer, and the security of AWS-managed services including their underlying operating systems and network infrastructure. The cloud customer, by contrast, is entirely responsible for security in the cloud: the configuration of every resource they deploy within the AWS environment, the classification and protection of their data, the management of user identities and access permissions, the security configuration of their operating systems and network controls, the encryption of data in transit and at rest, and the security of the applications they build and deploy on AWS infrastructure (AWS, 2023). 
 
 This division of responsibility represents a significant and frequently misunderstood paradigm shift for organisations transitioning from on-premise environments. In a traditional on-premise data centre, the organisation's IT security team controlled every layer of the security stack- from physical facility security to application-level controls; creating a clear, unified locus of security accountability. In the cloud, by contrast, the customer's security perimeter becomes defined not by the physical boundaries of a network, but by the correctness and completeness of the configuration choices made for every deployed cloud resource. A single misconfiguration- an overly permissive IAM policy, a publicly exposed storage bucket, an unencrypted database instance can expose an entire organisation's data estate to external actors. The proposed risk assessment system explicitly evaluates the user's stated security configuration against Shared Responsibility compliance benchmarks, 
 
-39 
 
 generating targeted priority alerts for configurations that fall short of the customer's cloud security obligations. 
 
@@ -523,7 +484,6 @@ Identity and Access Management (IAM) is the technical mechanism through which or
 
 However, IAM is frequently and consequentially misconfigured in practice. The most dangerous IAM misconfigurations identified in industry research include; the use of wildcard permissions (using 'Action': '*' and 'Resource': '*' in IAM policy documents) that grant a principal unrestricted access to all AWS services and resources, the failure to enforce multifactor authentication for privileged user accounts, the creation of IAM access keys with excessive privileges that are not rotated on a regular schedule and not deactivated when no longer needed, the use of the AWS root account for day-to-day operations rather than purpose-created IAM roles with appropriately scoped permissions, and the use of overly broad, pre-defined AWS managed policies (such as AdministratorAccess) in contexts where more granular, least-privilege policies would be appropriate (Cloud Security Alliance, 2022). The Cloud Security Alliance (CSA) consistently identifies IAM misconfigurations as one of the top threats to cloud security in its annual Top Threats to Cloud Computing report. The 
 
-40 
 
 risk scoring system developed in this study incorporates IAM permissiveness as a highweight input parameter (weight: 0.30) in the Cybersecurity risk sub-score, reflecting the central importance of access control configuration in determining the security posture of a cloud deployment. 
 
@@ -535,7 +495,6 @@ AWS provides comprehensive encryption capabilities at every layer of its service
 
 AWS storage services including S3, EBS, and RDS. Regulatory frameworks including GDPR Article 32, HIPAA Technical Safeguard provisions, and PCI DSS Requirement 3 mandate the use of strong encryption for specified categories of data, making encryption posture a direct determinant of regulatory compliance status in cloud environments. The encryption parameter in the Cybersecurity risk sub-score of this study's algorithm (weight: 0.20) captures the assessed quality of a proposed migration's encryption posture across these dimensions. 
 
-41 
 
 ## **2.4.4 Regulatory Compliance Frameworks Applicable to Cloud Migrations** 
 
@@ -555,7 +514,6 @@ AWS storage services including S3, EBS, and RDS. Regulatory frameworks including
 
 
 
-42 
 
 |NIST CSF<br>US-<br>Critical<br>infrastructure<br>Identify, Protect, Detect,<br>Respond,<br>Recover<br>functions<br>Regulatory<br>and<br>reputational consequences|NIST CSF<br>US-<br>Critical<br>infrastructure<br>Identify, Protect, Detect,<br>Respond,<br>Recover<br>functions<br>Regulatory<br>and<br>reputational consequences|NIST CSF<br>US-<br>Critical<br>infrastructure<br>Identify, Protect, Detect,<br>Respond,<br>Recover<br>functions<br>Regulatory<br>and<br>reputational consequences|NIST CSF<br>US-<br>Critical<br>infrastructure<br>Identify, Protect, Detect,<br>Respond,<br>Recover<br>functions<br>Regulatory<br>and<br>reputational consequences|NIST CSF<br>US-<br>Critical<br>infrastructure<br>Identify, Protect, Detect,<br>Respond,<br>Recover<br>functions<br>Regulatory<br>and<br>reputational consequences|
 |---|---|---|---|---|
@@ -575,7 +533,6 @@ The most significant and potentially destabilising financial implication of clou
 
 In the cloud, this model is replaced by an Operational Expenditure (OpEx) model in which computing resources are consumed as a metered service and billed based on actual usage at a granularity of per-second, per-request, per-gigabyte, or per-API-call depending on the service. This billing model offers substantial advantages in capital efficiency- organisations 
 
-43 
 
 avoid large upfront hardware investments, do not maintain costly excess capacity to handle peak demand, and can scale their infrastructure precisely to match workload demand at any point in time. However, the OpEx model introduces significant financial forecasting complexity that organisations transitioning from on-premise environments are frequently unprepared to manage. Cloud costs can fluctuate dramatically based on usage patterns, seasonal demand variation, data transfer volumes between services and regions, and the configuration choices made for specific cloud services. Without disciplined cost governance and proactive financial modelling, cloud costs can escalate rapidly and unpredictably therefore producing the phenomenon widely known in the industry as 'cloud bill shock'. 
 
@@ -583,7 +540,6 @@ avoid large upfront hardware investments, do not maintain costly excess capacity
 
 Research by the Flexera State of the Cloud Report (2023) identified that organisations waste an average of 32% of their total cloud spend- representing billions of dollars of unnecessary expenditure globally per year. The principal sources of cloud financial waste identified in this and related studies include; over-provisioning of compute resources, where virtual machine instances are sized based on peak theoretical demand rather than actual average utilisation, resulting in chronically underutilised resources that accrue charges continuously; orphaned resources, including unattached storage volumes, idle load balancers, and inactive database instances, that continue to accrue charges after the workloads they supported have been terminated or migrated; unanticipated data egress fees, where the cost of transferring data out of the cloud to on-premise systems, to end users, or between cloud regions is not factored into pre-migration financial models; runaway auto-scaling, where auto-scaling configurations trigger the provisioning of additional compute capacity in response to traffic spikes or load testing events, resulting in temporarily very high costs that were not anticipated; and the accumulation of development and testing environments that are deployed for temporary use but inadvertently left running in production. 
 
-44 
 
 The risk assessment system developed in this study addresses this financial risk dimension by incorporating three financial parameters- projected monthly resource cost (dynamically computed using live AWS pricing), data egress volume, and the CapEx-to-OpEx transition delta into the Financial Risk sub-score computation. The use of real-time AWS pricing data via the Boto3 SDK ensures that financial risk scores reflect current market rates rather than the static pricing snapshots that rapidly become outdated as AWS adjusts its pricing on an ongoing basis. 
 
@@ -593,7 +549,6 @@ In response to the widespread challenge of cloud cost management, the Cloud Fina
 
 ## **2.6 Serverless Computing and AWS Lambda** 
 
-45 
 
 ## **2.6.1 The Serverless Paradigm** 
 
@@ -601,7 +556,6 @@ Serverless computing is a cloud execution model in which the cloud provider dyna
 
 The serverless model offers two key properties that make it particularly well-suited for the backend API of the risk assessment system developed in this study. First, automatic scaling; the AWS Lambda runtime automatically provisions additional concurrent execution environments in response to increasing request volumes, ensuring that the system can handle bursts of concurrent assessment requests from multiple users without any manual intervention or capacity provisioning. This scalability is directly aligned with NFR-2 (Scalability), which requires automatic horizontal scaling to accommodate concurrent assessment requests. Second, the elimination of server management overhead, which removes an entire category of operational risk and reduces the total cost of system ownership to near-zero outside of actual usage periods. 
 
-46 
 
 ## **2.6.2 AWS Lambda Technical Architecture** 
 
@@ -609,7 +563,6 @@ AWS Lambda, launched by Amazon Web Services in November 2014, is the most widely
 
 A characteristic of Lambda deployments that requires careful architectural consideration is the cold start phenomenon- when a Lambda function is invoked after a period of inactivity, or when the platform scales out to handle increased concurrency, it must initialise a new execution environment- downloading the function's deployment package, initialising the runtime, and running any initialisation code outside the handler function. This initialisation process introduces additional latency on the first invocation after a cold start period, typically ranging from a few hundred milliseconds to several seconds depending on the function's package size, runtime, and initialisation complexity. Leitner et al. (2019) conducted an empirical study of Lambda cold start performance across multiple runtimes and found that 
 
-47 
 
 Python functions exhibit among the shortest cold start latencies, typically between 100ms and 400ms, making Python the optimal runtime choice for latency-sensitive API backends. The system's performance requirement (NFR-1: response within three seconds) accounts for this cold start overhead, and the Apache JMeter performance benchmarking described in Section 3.9.5 validates that the system meets this requirement under realistic concurrent load conditions. 
 
@@ -621,7 +574,6 @@ AWS API Gateway is a fully managed service that enables developers to create, pu
 
 Amazon DynamoDB is a fully managed, serverless NoSQL key-value and document database service designed to deliver single-digit millisecond read and write performance at any scale. Unlike traditional relational database management systems, which organise data in structured 
 
-48 
 
 tables with fixed schemas enforced through primary key and foreign key constraints, DynamoDB uses a flexible, schema-less data model in which each item (analogous to a row in a relational database) can have a different set of attributes, and the schema can evolve over time without requiring database schema migrations. Data in DynamoDB is organised into tables, with each item identified by a primary key that may be a simple partition key or a composite partition key plus sort key. 
 
@@ -631,7 +583,6 @@ DynamoDB's serverless billing model- where charges accrue based on the number of
 
 The frontend dashboard of the proposed system is constructed using the foundational technologies of the web platform: HTML5 for content structure and semantic markup, CSS3 for visual styling and responsive layout, and Vanilla JavaScript (ES6+)- the standardised, framework-free implementation of the JavaScript language (for dynamic behaviour, asynchronous API communication, and interactive visualization). The deliberate choice of Vanilla JavaScript over modern framework ecosystems such as React, Angular, or Vue.js reflects an architectural prioritisation of performance, maintainability, and portability over framework-specific development convenience. Heavy JavaScript frameworks impose 
 
-49 
 
 significant runtime overhead in the form of large bundle sizes that increase initial page load times, complex build pipeline dependencies that add maintenance burden, and framework version lifecycle management challenges that create long-term technical debt. For a dashboard application that serves a technically sophisticated audience of project managers and IT auditors- and that prioritises rapid load times, broad browser compatibility without transpilation, and minimal external dependency footprint, the Vanilla JavaScript approach provides the full expressive capability required through native browser APIs without the overhead imposed by framework runtimes. 
 
@@ -643,7 +594,6 @@ Chart.js v4.x is employed for data visualisation. It is a mature, actively maint
 
 Several commercial tools have been developed to support cloud migration planning, infrastructure discovery, and cost modelling. AWS Migration Evaluator (formerly TSO 
 
-50 
 
 Logic) provides a discovery-based analysis of on-premise server workloads, collecting performance metrics including CPU utilisation, memory consumption, storage I/O, and network throughput to generate projected cloud cost models and right-sizing recommendations. Cloudamize and Movere offer agent-based and agentless infrastructure discovery platforms that collect detailed performance data from on-premise environments and generate migration readiness assessments and cloud cost models. Microsoft Azure Migrate provides an analogous suite of discovery, assessment, and migration tracking tools for workloads targeted at Microsoft Azure. VMware HCX is specifically designed for the migration of VMware virtualised workloads to VMware-based cloud environments. 
 
@@ -658,7 +608,6 @@ Logic) provides a discovery-based analysis of on-premise server workloads, colle
 
 
 
-51 
 
 |||||
 |---|---|---|---|
@@ -681,7 +630,6 @@ Logic) provides a discovery-based analysis of on-premise server workloads, colle
 
 The foregoing review reveals six critical and well-evidenced gaps in the existing body of knowledge and available tooling that collectively justify the design and development of the system proposed in this study. 
 
-52 
 
 1. No existing deployed tool simultaneously quantifies operational, financial, and cybersecurity risks within a single, unified composite risk score for cloud migration projects. Commercial tools either address cost modelling or security assessment, but never both within the same integrated system. 
 
@@ -695,13 +643,11 @@ The foregoing review reveals six critical and well-evidenced gaps in the existin
 
 6. No existing system provides a Shared Responsibility Model compliance assessment that explicitly evaluates a proposed migration's security configuration against the customer's cloud security obligations, generating targeted alerts for configuration gaps. 
 
-53 
 
 ## **2.11 Chapter Summary** 
 
 This chapter has provided an extensive and critical review of the theoretical and empirical literature underpinning the design of the Cloud Migration Risk Assessment System. The review examined the foundational characteristics and service models of cloud computing; the strategic frameworks for cloud migration and the well-documented operational, financial, and security challenges of enterprise migration projects, the principles of IT risk management and the demonstrated structural limitations of static risk registers, the cloud security governance landscape including the Shared Responsibility Model, IAM risk, encryption requirements, and applicable regulatory compliance frameworks, the financial dynamics of the CapExtoOpEx transition and the FinOps discipline, the serverless computing paradigm, AWS Lambda architecture, and API Gateway integration, the DynamoDB NoSQL database as an audit trail persistence layer, frontend web technologies and Chart.js data visualization, and the capabilities and critical limitations of existing commercial migration assessment tools. The synthesis of these findings confirms the existence of six demonstrable and consequential gaps in existing tools and academic frameworks, and establishes the technical and theoretical foundation upon which the system's architecture, risk scoring algorithm, and validation strategy are built. The following chapter presents the complete research methodology adopted to design, implement, and evaluate this system. 
 
-54 
 
 ## **CHAPTER THREE** 
 
@@ -719,7 +665,6 @@ methodology, system requirements specification, three-tier serverless architectu
 
 This study is positioned within the Design Science Research (DSR) paradigm- a wellestablished methodology in information systems and software engineering research concerned with the creation and evaluation of innovative artefacts such as constructs, models, algorithms, methods, and implemented systems that solve identified real-world problems and generate new knowledge about how such solutions can be designed and made to work 
 
-55 
 
 (Hevner, March, Park, & Ram, 2004). DSR differs from natural science research, which seeks to describe and explain how the world is, by focusing on the prescriptive creation of artefacts that demonstrate how the world could or should be- it is, in Simon's (1996) terms, the science of the artificial. DSR requires that the artefact be rigorously designed against clearly stated requirements derived from problem analysis, implemented using sound engineering principles, and evaluated against quantitative and qualitative criteria that demonstrate its effectiveness in addressing the identified problem. 
 
@@ -738,7 +683,6 @@ This study follows the six-step DSR process model proposed by Peffers et al. (20
 
 
 
-56 
 
 ||||
 |---|---|---|
@@ -756,7 +700,6 @@ This study follows the six-step DSR process model proposed by Peffers et al. (20
 
 This study employs a mixed-methods approach, integrating qualitative and quantitative methods at complementary phases of the research lifecycle. In the qualitative phaseconducted during requirements elicitation, algorithm design calibration, and literature synthesis; a structured thematic analysis was conducted of peer-reviewed academic literature, authoritative industry reports, AWS technical documentation, and regulatory frameworks. This qualitative synthesis was used to derive the taxonomy of migration risk parameters, calibrate scoring thresholds and dimension weights, and populate the mitigation recommendation knowledge base. In the quantitative phase- conducted during system testing and performance validation, twenty-five structured test scenarios were executed against the fully deployed production system, generating numerical risk score outputs evaluated against pre-computed expected values. Apache JMeter performance benchmarking was conducted at 
 
-57 
 
 four concurrent user levels, generating response time distributions evaluated against the three-second performance threshold specified in the nonfunctional requirements. 
 
@@ -788,7 +731,6 @@ The Agile software development methodology, underpinned by the values and princi
 
 
 
-58 
 
 ||||<br>|
 |---|---|---|---|
@@ -817,7 +759,6 @@ The Agile software development methodology, underpinned by the values and princi
 
 
 
-59 
 
 |**FR-5**|Prioritised,<br>actionable<br>mitigation<br>recommendation list tailored to identified<br>vulnerabilities, sorted by severity|<br>Must Have|UAT|
 |---|---|---|---|
@@ -834,7 +775,6 @@ The Agile software development methodology, underpinned by the values and princi
 
 **3.3.2 Non-Functional Requirements** 
 
-60 
 
 |||||
 |---|---|---|---|
@@ -869,7 +809,6 @@ The Agile software development methodology, underpinned by the values and princi
 
 
 
-61 
 
 |||||||
 |---|---|---|---|---|---|
@@ -895,11 +834,9 @@ The system adopts a three-tier serverless architecture comprising; A client-side
 
 ## **3.4.2 System Data Flow Diagram** 
 
-62 
 
 The following diagram illustrates the complete end-to-end data flow of the Cloud Migration Risk Assessment System, from the user's input through the API-driven backend to the rendered dashboard and downloadable compliance report. 
 
-63 
 
 **Figure 3.1: System Data Flow Diagram (End-to-End Architecture)** 
 
@@ -909,9 +846,7 @@ The following flowchart details the internal logic of the Risk Assessment Lambda
 
 illustrating the sequential decision points and computational steps from API request receipt to JSON response dispatch. 
 
-64 
 
-65 
 
 **Figure 3.2: Risk Assessment Lambda- Internal Process Flowchart** 
 
@@ -921,7 +856,6 @@ illustrating the sequential decision points and computational steps from API req
 
 The risk scoring algorithm is the intellectual core of the system. It accepts the validated migration parameter payload submitted by the user through the frontend form and produces three normalised dimensional sub-scores- Operational (O), Financial (F), and Cybersecurity (Cy) plus a single weighted composite score (C), all expressed on a 0-to100 normalised scale where higher values indicate greater risk exposure. Three design principles guided the algorithm's development; Dimensional Completeness (the algorithm must assess all three principal sources of cloud migration failure simultaneously), Data-driven Calibration (all scoring thresholds, parameter weights, and normalisation function inflection points must be grounded in authoritative empirical evidence from peer-reviewed literature and industry reports), and Interpretability (outputs must be decomposable into their constituent parameter contributions so that users can identify which specific aspects of their migration plan are driving the overall score and what targeted actions can reduce it). 
 
-66 
 
 ## **3.5.2 Algorithm Pseudocode** 
 
@@ -947,7 +881,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **OUTPUT: RiskResult R {** 
 
-67 
 
 **assessment_id       : String  // UUID v4     composite_score     : Float   // C in [0, 100] operational_score   : Float   // O in [0, 100]     financial_score     : Float   // F in [0, 100] cybersecurity_score : Float   // Cy in [0, 100]     risk_tier           : String  // LOW | MEDIUM | HIGH     live_price_used     : Boolean** 
 
@@ -975,7 +908,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **IF P.server_count < 10 THEN** 
 
-68 
 
 **NS ← (P.server_count / 10) * 25                  // range: 0–25   ELSE IF P.server_count** 
 
@@ -1013,7 +945,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **// ─── PHASE 1B: FINANCIAL  PARAMETER  NORMALISATION** 
 
-69 
 
 **────────────────────** 
 
@@ -1045,7 +976,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **// Normalise egress_volume_tb → NE** 
 
-70 
 
 **NE ← CLAMP((P.egress_volume_tb / 10) * 80 + 10, 10, 100)** 
 
@@ -1077,7 +1007,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **NONE: 5, SINGLE: 30, MULTIPLE: 60, CRITICAL: 90   })** 
 
-71 
 
 **// ─── PHASE 2: DIMENSIONAL SUB-SCORE COMPUTATION** 
 
@@ -1101,7 +1030,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **IF C < 40 THEN      tier ← 'LOW'** 
 
-72 
 
 **ELSE IF C < 70 THEN tier ← 'MEDIUM'** 
 
@@ -1127,7 +1055,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **'IAM Permissiveness': {score: NIAM,  dim: 'Cybersecurity',  thresh: 50}, 'Encryption'        : {score: NEnc,  dim: 'Cybersecurity',  thresh: 50}, 'Compliance Scope'  : {score: NComp, dim: 'Cybersecurity',  thresh: 50}   }** 
 
-73 
 
 **FOR EACH (param_name, param_data) IN parameter_contributions:       IF param_data.score > param_data.thresh THEN** 
 
@@ -1159,7 +1086,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **DYNAMODB.put_item({** 
 
-74 
 
 **AssessmentId    : assessment_id,** 
 
@@ -1193,7 +1119,6 @@ The following pseudocode provides a complete, language-independent specification
 
 **END ALGORITHM** 
 
-75 
 
 ## **3.5.3 Mathematical Specification of Sub-Scores** 
 
@@ -1227,7 +1152,6 @@ Cybersecurity(0.35): Breaches produce irrecoverable reputational / regulatory ha
 
 **Figure 3.4: Mathematical Specification of the Three-Dimensional Risk Scoring Model** 
 
-76 
 
 ||||||<br> <br> <br> <br>|
 |---|---|---|---|---|---|
@@ -1251,7 +1175,6 @@ Cybersecurity(0.35): Breaches produce irrecoverable reputational / regulatory ha
 
 
 
-77 
 
 ||||||<br>|
 |---|---|---|---|---|---|
@@ -1271,7 +1194,6 @@ Cybersecurity(0.35): Breaches produce irrecoverable reputational / regulatory ha
 
 The weighting structure adopted in the risk scoring model was derived from a synthesis of industry reports, cloud migration case studies, and cloud security governance literature. Operational Risk was assigned a weight of 35% because migration failure is frequently associated with application complexity, dependency mapping errors, and data transfer challenges. Cybersecurity Risk was also assigned 35% due to the prevalence of cloud misconfiguration incidents, access control failures, and regulatory penalties. Financial Risk was assigned 30% because although financial overruns are significant, they are generally easier to detect and correct than security or operational failures. The weighting model was subjected to sensitivity analysis using multiple simulated migration scenarios to ensure that no single parameter disproportionately influenced the composite score. 
 
-78 
 
 ## **3.6 Technology Stack Justification** 
 
@@ -1293,7 +1215,6 @@ The weighting structure adopted in the risk scoring model was derived from a syn
 
 
 
-79 
 
 |||||
 |---|---|---|---|
@@ -1317,7 +1238,6 @@ Security is treated as a first-class architectural concern throughout the system
 
 shift-left security philosophy that the system itself advocates to its users. Seven security controls are implemented across all layers of the system architecture. 
 
-80 
 
 ||||
 |---|---|---|
@@ -1337,7 +1257,6 @@ shift-left security philosophy that the system itself advocates to its users. Se
 
 
 
-81 
 
 ||||
 |---|---|---|
@@ -1357,7 +1276,6 @@ shift-left security philosophy that the system itself advocates to its users. Se
 
 Unit tests were authored for each discrete Python function within the Lambda modules using the pytest framework, with all external dependencies replaced by controlled mock objects through Python's unittest.mock library. This isolation ensures deterministic, repeatable tests that neither incur live AWS API costs nor depend on network availability. Three categories of test cases were implemented for each function: nominal cases testing expected behaviour with typical parameter values; boundary cases testing the exact inflection points of the piecewise normalisation functions (D = 10 TB, D = 50 TB, S = 10, S = 50, S = 200, W = 4 hrs, W = 24 hrs, W = 72 hrs); and edge cases testing minimum and maximum valid parameter 
 
-82 
 
 values. A minimum code coverage target of 80% was required for all Lambda modules, measured using pytest-cov with line-level reporting. 
 
@@ -1371,7 +1289,6 @@ DynamoDB Local- Amazon's locally executable replica of the DynamoDB service, was
 
 System testing executed twenty-five pre-designed structured scenarios against the fully deployed production system. The scenarios were constructed using a stratified design: eight scenarios targeted Low Risk outcomes (0-39), ten targeted Medium Risk (40-69), and seven targeted High Risk (70-100). Five additional scenarios tested boundary and edge conditions. For each scenario, the expected composite score was manually pre-computed using the algorithm's published formulas before system execution, providing a ground truth for validation. A tolerance of ±0.5 was applied for floating-point arithmetic. 
 
-83 
 
 ||||||
 |---|---|---|---|---|
@@ -1408,7 +1325,6 @@ System testing executed twenty-five pre-designed structured scenarios against th
 
 
 
-84 
 
 ||||||
 |---|---|---|---|---|
@@ -1431,7 +1347,6 @@ A structured evaluation instrument based on a five-point Likert scale was used t
 
 Apache JMeter 5.6 was used to benchmark the end-to-end latency of the POST /assess endpoint under simulated concurrent load at four concurrency levels; 1, 10, 25, and 50 virtual users. Each test scenario ran for 60 seconds after a 10-second linear ramp-up period, with each virtual user submitting a standardised assessment payload (a pre-defined Medium Risk 
 
-85 
 
 scenario) in a continuous loop without think time. For each concurrency level, four primary metrics were recorded; average response time (ms), 95th percentile response time (ms), minimum response time (ms), and HTTP error rate (%). The performance acceptance criterion was that the 95th percentile response time must not exceed 3,000ms (NFR-1) and the HTTP error rate must not exceed 1% at any tested concurrency level. 
 
@@ -1443,7 +1358,6 @@ This study was conducted in full compliance with the institution's research ethi
 
 This chapter has presented the complete methodological framework for the design, development, and validation of the Cloud Migration Risk Assessment System. The study was 
 
-86 
 
 positioned within the Design Science Research paradigm with a pragmatist philosophical stance and a mixed-methods research approach. An Agile sprint methodology structured the ten-week implementation across five focused two-week sprints with clear, measurable deliverables at each stage. Eight functional and seven non-functional requirements were systematically derived from the research objectives and the literature gaps identified in Chapter Two. The three-tier serverless architecture was specified in full, encompassing the frontend single-page application, the dual Lambda function backend, the API Gateway configuration, and the DynamoDB table design. The system data flow diagram (Figure 3.1) and the Risk Assessment Lambda process flowchart (Figure 3.2) provide complete visual representations of system behaviour. The proprietary risk scoring algorithm was documented in full through pseudocode (Algorithm 3.1), mathematical specification (Figure 3.3), and parameter weight tables (Table 3.5). Complete, deployable Python source code for both Lambda functions (Code Listings 3.1 and 3.2) and the frontend JavaScript application (Code Listing 3.3) was presented, providing full methodological transparency. The security design and multi-level testing strategy- spanning unit, integration, system, user acceptance, and performance testing — were specified in detail. The following chapter presents the implementation details, testing results, and evaluation findings. 
 
@@ -1451,7 +1365,6 @@ positioned within the Design Science Research paradigm with a pragmatist philoso
 
 **Academic & Research Literature** 
 
-87 
 
 - **Bannerman, P. L.** (2008). Risk and risk management in software projects: A reassessment. _Journal of Systems and Software_ , _81_ (12), 2118–2133. 
 
@@ -1483,7 +1396,6 @@ https://docs.aws.amazon.com/lambda/
 
 infrastructure as a service (IaaS). _International Journal of Engineering and_ 
 
-88 
 
 _Information Technology_ , _2_ (1), 60–63. 
 
@@ -1535,7 +1447,6 @@ _assessments_ (Special Publication 800-30 Revision 1). U.S. Department of Commer
 
 https://www.ibm.com/reports/data-breach 
 
-89 
 
 ## **Regulatory Frameworks & Standards (Contextual Citations)** 
 
