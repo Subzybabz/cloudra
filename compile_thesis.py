@@ -118,9 +118,9 @@ def compile_thesis():
     
     subsection_style = ParagraphStyle(
         'SubsectionTitle',
-        fontName='Times-BoldItalic',
-        fontSize=12,
-        leading=16,
+        fontName='Times-Bold',
+        fontSize=13,
+        leading=18,
         spaceBefore=12,
         spaceAfter=8,
         keepWithNext=True
