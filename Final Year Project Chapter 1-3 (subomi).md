@@ -1559,29 +1559,27 @@ https://www.ibm.com/reports/data-breach
 
 
 
-## **Chapter 4**
+## **CHAPTER FOUR**
 
 ## **DESIGN AND IMPLEMENTATION**
 
+## **4.0 Introduction**
+
+This chapter presents the implementation, testing, and validation results of the developed Cloud Migration Risk Assessment System (CloudRA). It describes the software architecture, the specific programming details, the user interface design, and the validation strategy used to verify that the system satisfies both functional and non-functional requirements. The chapter also details the test coverage results, showing how the piecewise normalisation algorithms and database persistence layers perform under automated verification scenarios.
+
 ## **4.1 System Implementation Overview**
 
-The implementation of the CloudRA (Cloud Migration Risk Assessor) system realises the academic models established in previous chapters through a modern, hybrid-architecture web application. The system is designed to provide dual-mode persistence, being deployable natively on Amazon Web Services for production-grade cloud operations or run completely locally using embedded SQLite storage for offline presentations and academic demonstrations. The architecture is optimised for zero-latency, presentation-grade operations, ensuring that all features function reliably regardless of network availability or AWS credential configuration.
+The implementation of the CloudRA system realises the academic models established in previous chapters through a modern, hybrid-architecture web application. The system is designed to provide dual-mode persistence, being deployable natively on Amazon Web Services for production-grade cloud operations or run completely locally using embedded SQLite storage for offline presentations and academic demonstrations. The architecture is optimised for zero-latency, presentation-grade operations, ensuring that all features function reliably regardless of network availability or AWS credential configuration.
 
-90
+The system architecture follows a three-tier design comprising a frontend presentation layer, a backend API services layer, and a persistence and cloud integration layer. The frontend presentation layer is built using semantic HTML5, CSS3 Custom Properties implementing the Stillwater Design System, and object-oriented Vanilla JavaScript conforming to the ES2022 specification. The frontend communicates asynchronously with the backend via HTTPS JSON payloads using the browser's native Fetch API. In static serverless configurations, such as the GitHub Pages deployment used for public demonstration, the JavaScript controller automatically toggles into a Presentation Sandbox Mode that executes the entire scoring algorithm and state management engine client-side using the browser's localStorage API, eliminating any dependency on the Python backend.
 
-The system architecture follows a three-tier design comprising a frontend presentation layer, a backend API services layer, and a persistence and cloud integration layer. The **frontend presentation layer** is built using semantic HTML5, CSS3 Custom Properties implementing the Stillwater Design System, and object-oriented Vanilla JavaScript conforming to the ES2022 specification. The frontend communicates asynchronously with the backend via HTTPS JSON payloads using the browser's native Fetch API. In static serverless configurations, such as the GitHub Pages deployment used for public demonstration, the JavaScript controller automatically toggles into a **Presentation Sandbox Mode** that executes the entire scoring algorithm and state management engine client-side using the browser's localStorage API, eliminating any dependency on the Python backend.
+The backend API services layer is implemented using the Python 3.12 Flask micro-framework, providing secure session-based authentication guards, assessment CRUD (Create, Read, Update, Delete) operations, and automated PDF compliance report generation via the ReportLab library. The Flask application exposes RESTful JSON endpoints for assessment submission, retrieval, listing, and deletion, as well as HTML-serving routes for the landing page, login portal, and authenticated dashboard.
 
-The **backend API services layer** is implemented using the Python 3.12 Flask micro-framework, providing secure session-based authentication guards, assessment CRUD (Create, Read, Update, Delete) operations, and automated PDF compliance report generation via the ReportLab library. The Flask application exposes RESTful JSON endpoints for assessment submission, retrieval, listing, and deletion, as well as HTML-serving routes for the landing page, login portal, and authenticated dashboard.
+The AWS SDK integration layer is powered by the official AWS SDK for Python, Boto3 (version 1.34+), executing connections to two AWS services. The first is the AWS Pricing Service API, which queries real-time on-demand pricing rates for EC2 instance configurations within the standard us-east-1 pricing catalog endpoint. The second is the AWS DynamoDB Service, which provides managed NoSQL table provisioning, item writing, scanning, and deletion operations for persistent cloud-hosted storage of assessment records.
 
-91
-
-The **AWS SDK integration layer** is powered by the official AWS SDK for Python, Boto3 (version 1.34+), executing connections to two AWS services. The first is the **AWS Pricing Service API**, which queries real-time on-demand pricing rates for EC2 instance configurations within the standard us-east-1 pricing catalog endpoint. The second is the **AWS DynamoDB Service**, which provides managed NoSQL table provisioning, item writing, scanning, and deletion operations for persistent cloud-hosted storage of assessment records.
-
-The **hybrid persistence adapter** uses a polymorphic design pattern to switch between storage backends at runtime. If the environment variable USE_DYNAMODB is set to true and valid AWS credentials are available, all assessment records are written directly to the remote AWS DynamoDB table named CloudRiskAssessments. If the flag is absent, or if AWS credentials or internet connectivity are unavailable, the adapter falls back gracefully to a local SQLite database file (assessments.db) whose table schema and column names are designed to mirror the DynamoDB attribute structure exactly, ensuring data portability between the two backends.
+The hybrid persistence adapter uses a polymorphic design pattern to switch between storage backends at runtime. If the environment variable USE_DYNAMODB is set to true and valid AWS credentials are available, all assessment records are written directly to the remote AWS DynamoDB table named CloudRiskAssessments. If the flag is absent, or if AWS credentials or internet connectivity are unavailable, the adapter falls back gracefully to a local SQLite database file (assessments.db) whose table schema and column names are designed to mirror the DynamoDB attribute structure exactly, ensuring data portability between the two backends.
 
 To ensure zero network latency during academic reviews and offline presentations, the application implements several presentation performance features. Google Fonts Fraunces and Inter are bundled locally as compressed WOFF2 (Web Open Font Format 2) files and linked through local @font-face CSS bindings, eliminating dependency on external font CDN servers. Grid backdrops and linen grain texturing are encoded directly into the local stylesheets as base64-encoded SVG data URIs, removing the need for external image requests. The AWS Pricing API call is wrapped in a strict 1.5-second timeout; if the call exceeds this threshold or encounters a network error, the system immediately falls back to a hardcoded local pricing table containing cached EC2 on-demand rates for four AWS regions, ensuring that financial risk calculations always return valid results.
-
-92
 
 ## **4.2 Design Components (The Logic)**
 
@@ -1591,109 +1589,87 @@ The core logic of the CloudRA scoring engine implements the mathematical formula
 
 Operational risk measures the physical and structural complexity of the workload migration. Four parameters contribute to the operational sub-score, each normalised to a value between 0.0 and 1.0 before weighting.
 
-**Data Volume (N_data)** is normalised using a three-segment piecewise linear function applied to the input volume in terabytes. For volumes between 0 and 10 TB, the normalised score ranges linearly from 0.0 to 0.4, reflecting low operational complexity for small-scale data migrations. For volumes between 10 and 100 TB, the score ranges from 0.4 to 0.8, representing moderate complexity. For volumes between 100 and 1,000 TB, the score ranges from 0.8 to 1.0, representing high-complexity enterprise-scale migrations where data gravity effects become significant.
+Data Volume (N_data) is normalised using a three-segment piecewise linear function applied to the input volume in terabytes. For volumes between 0 and 10 TB, the normalised score ranges linearly from 0.0 to 0.4, reflecting low operational complexity for small-scale data migrations. For volumes between 10 and 100 TB, the score ranges from 0.4 to 0.8, representing moderate complexity. For volumes between 100 and 1,000 TB, the score ranges from 0.8 to 1.0, representing high-complexity enterprise-scale migrations where data gravity effects become significant.
 
-93
+Server Count (N_servers) is normalised using a three-segment piecewise linear function applied to the total number of servers to be migrated. For counts between 0 and 50, the normalised score ranges from 0.0 to 0.5. For counts between 50 and 200, the score ranges from 0.5 to 0.85. For counts between 200 and 2,000, the score ranges from 0.85 to 1.0, reflecting the diminishing marginal increase in operational complexity as infrastructure scales to very large deployments.
 
-**Server Count (N_servers)** is normalised using a three-segment piecewise linear function applied to the total number of servers to be migrated. For counts between 0 and 50, the normalised score ranges from 0.0 to 0.5. For counts between 50 and 200, the score ranges from 0.5 to 0.85. For counts between 200 and 2,000, the score ranges from 0.85 to 1.0, reflecting the diminishing marginal increase in operational complexity as infrastructure scales to very large deployments.
+Application Complexity (N_complexity) is determined by a categorical lookup function based on the system architecture classification selected by the user. The lookup values are: LOW = 0.1 (static web pages and standalone servers), MEDIUM = 0.4 (standard N-tier applications with localised databases), HIGH = 0.8 (distributed microservices with transactional databases), and VERY_HIGH = 1.0 (legacy monolithic applications with mainframe integrations).
 
-**Application Complexity (N_complexity)** is determined by a categorical lookup function based on the system architecture classification selected by the user. The lookup values are: LOW = 0.1 (static web pages and standalone servers), MEDIUM = 0.4 (standard N-tier applications with localised databases), HIGH = 0.8 (distributed microservices with transactional databases), and VERY_HIGH = 1.0 (legacy monolithic applications with mainframe integrations).
+Migration Cutover Window (N_window) is normalised using a three-segment piecewise linear function applied to the acceptable maintenance window in hours. This parameter uses an inverse relationship, meaning that shorter windows produce higher risk scores. For windows between 0 and 12 hours, the normalised score ranges from 1.0 down to 0.8, reflecting the high risk associated with extremely tight cutover deadlines. For windows between 12 and 48 hours, the score ranges from 0.8 down to 0.3. For windows between 48 and 168 hours (one week), the score ranges from 0.3 down to 0.0, reflecting the reduced operational risk afforded by generous migration timelines.
 
-**Migration Cutover Window (N_window)** is normalised using a three-segment piecewise linear function applied to the acceptable maintenance window in hours. This parameter uses an inverse relationship, meaning that shorter windows produce higher risk scores. For windows between 0 and 12 hours, the normalised score ranges from 1.0 down to 0.8, reflecting the high risk associated with extremely tight cutover deadlines. For windows between 12 and 48 hours, the score ranges from 0.8 down to 0.3. For windows between 48 and 168 hours (one week), the score ranges from 0.3 down to 0.0, reflecting the reduced operational risk afforded by generous migration timelines.
-
-94
-
-The operational risk sub-score is then derived using a weighted linear combination of the four normalised parameters: **Operational = (0.30 multiplied by N_data, plus 0.25 multiplied by N_servers, plus 0.30 multiplied by N_complexity, plus 0.15 multiplied by N_window) multiplied by 100**. This produces a score on a 0-to-100 scale, where higher values indicate greater operational migration risk.
+The operational risk sub-score is then derived using a weighted linear combination of the four normalised parameters: Operational = (0.30 * N_data + 0.25 * N_servers + 0.30 * N_complexity + 0.15 * N_window) * 100. This produces a score on a 0-to-100 scale, where higher values indicate greater operational migration risk.
 
 ## _**4.2.2 Financial Dimension Scoring**_
 
 Financial risk models budgetary exposure and monthly infrastructure run costs against the organisation's existing on-premises capital expenditure baseline. Three parameters contribute to the financial sub-score.
 
-**Monthly Cost Run (N_cost)** is normalised using a three-segment piecewise linear function applied to the estimated monthly AWS infrastructure cost in US dollars. This cost is computed by multiplying the live (or cached) EC2 on-demand hourly rate for the selected instance type and region by the server count and by 730 hours per month. For monthly costs between $0 and $2,000, the normalised score ranges from 0.0 to 0.4. For costs between $2,000 and $10,000, the score ranges from 0.4 to 0.85. For costs between $10,000 and $100,000, the score ranges from 0.85 to 1.0.
+Monthly Cost Run (N_cost) is normalised using a three-segment piecewise linear function applied to the estimated monthly AWS infrastructure cost in US dollars. This cost is computed by multiplying the live (or cached) EC2 on-demand hourly rate for the selected instance type and region by the server count and by 730 hours per month. For monthly costs between $0 and $2,000, the normalised score ranges from 0.0 to 0.4. For costs between $2,000 and $10,000, the score ranges from 0.4 to 0.85. For costs between $10,000 and $100,000, the score ranges from 0.85 to 1.0.
 
-95
+Network Egress Volume (N_egress) is normalised linearly. The input egress volume in terabytes is divided by 50, with a maximum cap of 1.0. This reflects the significant data transfer charges that AWS applies to outbound traffic, which are frequently underestimated in migration planning.
 
-**Network Egress Volume (N_egress)** is normalised linearly. The input egress volume in terabytes is divided by 50, with a maximum cap of 1.0. This reflects the significant data transfer charges that AWS applies to outbound traffic, which are frequently underestimated in migration planning.
+Cost Delta (N_delta) measures the budget differential between the projected AWS monthly cost (C_aws) and the organisation's current on-premises monthly CapEx (C_prem). The delta is defined as C_aws minus C_prem. For negative deltas (where cloud costs are lower than on-premises costs) ranging from negative $10,000 to $0, the normalised score ranges from 0.0 to 0.3, reflecting minimal financial risk. For positive deltas (where cloud costs exceed on-premises costs) ranging from $0 to $20,000, the score ranges from 0.3 to 1.0, reflecting increasing financial exposure.
 
-**Cost Delta (N_delta)** measures the budget differential between the projected AWS monthly cost (C_aws) and the organisation's current on-premises monthly CapEx (C_prem). The delta is defined as C_aws minus C_prem. For negative deltas (where cloud costs are lower than on-premises costs) ranging from negative $10,000 to $0, the normalised score ranges from 0.0 to 0.3, reflecting minimal financial risk. For positive deltas (where cloud costs exceed on-premises costs) ranging from $0 to $20,000, the score ranges from 0.3 to 1.0, reflecting increasing financial exposure.
-
-The financial risk sub-score is defined as: **Financial = (0.45 multiplied by N_cost, plus 0.30 multiplied by N_egress, plus 0.25 multiplied by N_delta) multiplied by 100**.
+The financial risk sub-score is defined as: Financial = (0.45 * N_cost + 0.30 * N_egress + 0.25 * N_delta) * 100.
 
 ## _**4.2.3 Cybersecurity Dimension Scoring**_
 
 Cybersecurity risk measures the security surface exposure and configuration posture of the proposed cloud deployment. Four categorical parameters contribute to the cybersecurity sub-score, each assigned a fixed normalised value based on the classification selected by the user.
 
-96
+Data Sensitivity Class (N_sens) assigns risk scores based on the data classification level: PUBLIC = 0.0 (publicly available data with no confidentiality requirements), INTERNAL = 0.3 (internal corporate data not intended for public disclosure), CONFIDENTIAL = 0.7 (sensitive business or customer data subject to access controls), and RESTRICTED = 1.0 (highly regulated data subject to statutory protection requirements such as GDPR, HIPAA, or PCI DSS).
 
-**Data Sensitivity Class (N_sens)** assigns risk scores based on the data classification level: PUBLIC = 0.0 (publicly available data with no confidentiality requirements), INTERNAL = 0.3 (internal corporate data not intended for public disclosure), CONFIDENTIAL = 0.7 (sensitive business or customer data subject to access controls), and RESTRICTED = 1.0 (highly regulated data subject to statutory protection requirements such as GDPR, HIPAA, or PCI DSS).
+IAM Posture Permissiveness (N_iam) assigns risk scores based on the access control configuration scope: LEAST_PRIV = 0.0 (strict principle of least privilege with scoped role-based access), MODERATE = 0.3 (standard role-based access with limited administrative scope), PERMISSIVE = 0.7 (broad access grants with insufficient boundary controls), and WILDCARD = 1.0 (unrestricted wildcard IAM policies granting full administrative access to all resources).
 
-**IAM Posture Permissiveness (N_iam)** assigns risk scores based on the access control configuration scope: LEAST_PRIV = 0.0 (strict principle of least privilege with scoped role-based access), MODERATE = 0.3 (standard role-based access with limited administrative scope), PERMISSIVE = 0.7 (broad access grants with insufficient boundary controls), and WILDCARD = 1.0 (unrestricted wildcard IAM policies granting full administrative access to all resources).
+Encryption Coverage (N_enc) assigns risk scores based on the encryption posture: FULL = 0.0 (comprehensive encryption covering both data in transit via TLS and data at rest via KMS), PARTIAL = 0.4 (encryption at rest only, with transit data unprotected), TRANSIT_ONLY = 0.7 (transit encryption only, with stored data unencrypted), and NONE = 1.0 (no encryption, with all data stored and transmitted in plaintext).
 
-**Encryption Coverage (N_enc)** assigns risk scores based on the encryption posture: FULL = 0.0 (comprehensive encryption covering both data in transit via TLS and data at rest via KMS), PARTIAL = 0.4 (encryption at rest only, with transit data unprotected), TRANSIT_ONLY = 0.7 (transit encryption only, with stored data unencrypted), and NONE = 1.0 (no encryption, with all data stored and transmitted in plaintext).
+Compliance Governance Scope (N_comp) assigns risk scores based on the number and criticality of external regulatory frameworks applicable to the migration: NONE = 0.0 (no external compliance obligations), SINGLE = 0.3 (subject to one regulatory framework), MULTIPLE = 0.7 (subject to multiple overlapping regulatory frameworks), and CRITICAL = 1.0 (subject to critical-infrastructure compliance requirements with mandatory audit reporting).
 
-97
-
-**Compliance Governance Scope (N_comp)** assigns risk scores based on the number and criticality of external regulatory frameworks applicable to the migration: NONE = 0.0 (no external compliance obligations), SINGLE = 0.3 (subject to one regulatory framework), MULTIPLE = 0.7 (subject to multiple overlapping regulatory frameworks), and CRITICAL = 1.0 (subject to critical-infrastructure compliance requirements with mandatory audit reporting).
-
-The cybersecurity risk sub-score is defined as: **Cybersecurity = (0.35 multiplied by N_sens, plus 0.30 multiplied by N_iam, plus 0.20 multiplied by N_enc, plus 0.15 multiplied by N_comp) multiplied by 100**.
+The cybersecurity risk sub-score is defined as: Cybersecurity = (0.35 * N_sens + 0.30 * N_iam + 0.20 * N_enc + 0.15 * N_comp) * 100.
 
 ## _**4.2.4 Composite Score and Risk Tiers**_
 
-The overall migration risk is calculated as a weighted composite of the three dimensional sub-scores: **Composite = (0.35 multiplied by Operational) plus (0.30 multiplied by Financial) plus (0.35 multiplied by Cybersecurity)**. The weighting structure assigns equal prominence to Operational and Cybersecurity risk (35% each) and slightly lower weight to Financial risk (30%), reflecting the finding in the literature that operational failures and security misconfigurations are generally more difficult to detect and remediate than financial overruns.
+The overall migration risk is calculated as a weighted composite of the three dimensional sub-scores: Composite = (0.35 * Operational) + (0.30 * Financial) + (0.35 * Cybersecurity). The weighting structure assigns equal prominence to Operational and Cybersecurity risk (35% each) and slightly lower weight to Financial risk (30%), reflecting the finding in the literature that operational failures and security misconfigurations are generally more difficult to detect and remediate than financial overruns.
 
-98
-
-The composite score maps directly to three actionable risk tiers: **LOW RISK** for scores from 0.0 up to but not including 40.0, indicating that the migration plan is within acceptable risk tolerance and may proceed with standard monitoring; **MEDIUM RISK** for scores from 40.0 up to but not including 70.0, indicating that the migration plan contains elevated risk factors requiring targeted mitigation before proceeding; and **HIGH RISK** for scores from 70.0 to 100.0, indicating that the migration plan presents critical risk exposures that must be substantially addressed before the migration should be authorised.
+The composite score maps directly to three actionable risk tiers: LOW RISK for scores from 0.0 up to but not including 40.0, indicating that the migration plan is within acceptable risk tolerance and may proceed with standard monitoring; MEDIUM RISK for scores from 40.0 up to but not including 70.0, indicating that the migration plan contains elevated risk factors requiring targeted mitigation before proceeding; and HIGH RISK for scores from 70.0 to 100.0, indicating that the migration plan presents critical risk exposures that must be substantially addressed before the migration should be authorised.
 
 ## **4.3 User Interface (UI) Design**
 
-The frontend of CloudRA is built to reflect the **Stillwater design system**, a custom visual identity prioritising clean editorial layouts, readable serif typography, warm organic colour palettes, and calm micro-animations that communicate system state changes clearly without the visual clutter commonly associated with enterprise dashboard products.
+The frontend of CloudRA is built to reflect the Stillwater design system, a custom visual identity prioritising clean editorial layouts, readable serif typography, warm organic colour palettes, and calm micro-animations that communicate system state changes clearly without the visual clutter commonly associated with enterprise dashboard products.
 
 ## _**4.3.1 Visual Design Tokens**_
 
-The colour palette is intentionally organic and restrained, designed to prevent the "dashboard fatigue" that arises from prolonged interaction with high-contrast, saturated enterprise interfaces. The main viewport background uses a warm cream tone (hexadecimal #f4ede0), dashboard cards use a brighter cream (#faf5ec), and primary typography uses a dark charcoal-ink (#2c2620). The accent colour is a warm terracotta (#b16a48) used for interactive elements, active states, and risk-elevated indicators. Safe status indicators use a muted sage-green (#5d6e5a) that communicates stability without aggressive visual emphasis.
-
-99
+The colour palette is intentionally organic and restrained, designed to prevent the dashboard fatigue that arises from prolonged interaction with high-contrast, saturated enterprise interfaces. The main viewport background uses a warm cream tone (hexadecimal #f4ede0), dashboard cards use a brighter cream (#faf5ec), and primary typography uses a dark charcoal-ink (#2c2620). The accent colour is a warm terracotta (#b16a48) used for interactive elements, active states, and risk-elevated indicators. Safe status indicators use a muted sage-green (#5d6e5a) that communicates stability without aggressive visual emphasis.
 
 A custom SVG fractal noise filter is applied as a fixed overlay across the entire viewport body, creating a subtle linen grain texture that softens the flat digital appearance of the interface and reinforces the editorial, print-inspired aesthetic. This texture is embedded directly in the CSS as a base64-encoded SVG data URI, ensuring zero additional network requests.
 
-The typography strategy pairs the variable-weight serif font **Fraunces** (used for display titles, composite score numerals, and card headers) with the neutral sans-serif font **Inter** (used for form labels, body text, and data tables). This pairing follows the established typographic principle of combining a high-personality display face with a clean workhorse body font to create clear visual hierarchy and reading rhythm.
+The typography strategy pairs the variable-weight serif font Fraunces (used for display titles, composite score numerals, and card headers) with the neutral sans-serif font Inter (used for form labels, body text, and data tables). This pairing follows the established typographic principle of combining a high-personality display face with a clean workhorse body font to create clear visual hierarchy and reading rhythm.
 
 ## _**4.3.2 Interactive UI Controls**_
 
-The dashboard implements three primary interactive visual components. The first is the **Dynamic Risk Alignment Orb**, a breathing animation guide positioned in the bottom corner of the viewport. This component uses CSS keyframe scaling to create a continuous pulse animation whose speed and colour are dynamically modified by the frontend JavaScript based on the computed risk tier. When the risk tier is LOW, the orb displays in sage-green with a slow nine-second pulse cycle and the status text reads "STEADY - OPTIMISED". When the risk tier is MEDIUM, the orb changes to terracotta-orange with a four-second pulse cycle and the status text reads "MODERATE - CAUTION". When the risk tier is HIGH, the orb changes to terracotta-red with a rapid 1.5-second pulse cycle and the status text reads "TENSION - RISK ALERT".
+The dashboard implements three primary interactive visual components. The first is the Dynamic Risk Alignment Orb, a breathing animation guide positioned in the bottom corner of the viewport. This component uses CSS keyframe scaling to create a continuous pulse animation whose speed and colour are dynamically modified by the frontend JavaScript based on the computed risk tier. When the risk tier is LOW, the orb displays in sage-green with a slow nine-second pulse cycle and the status text reads "STEADY - OPTIMISED". When the risk tier is MEDIUM, the orb changes to terracotta-orange with a four-second pulse cycle and the status text reads "MODERATE - CAUTION". When the risk tier is HIGH, the orb changes to terracotta-red with a rapid 1.5-second pulse cycle and the status text reads "TENSION - RISK ALERT".
 
-100
+The second interactive component is the HTML5 Canvas Gauge and Radar Chart pair. The composite risk gauge draws a semicircular arc on a native HTML5 Canvas 2D rendering context, with the active arc length proportional to the computed composite score and the arc colour dynamically set to sage-green (LOW), terracotta (MEDIUM), or deep terracotta (HIGH). The radar chart draws the three dimensional sub-scores (Operational, Financial, Cybersecurity) as vertices on a triangular axis system, with concentric reference rings at 25%, 50%, 75%, and 100% providing scale context. Both charts are rendered entirely using native Canvas API calls without any external charting library dependencies.
 
-The second interactive component is the **HTML5 Canvas Gauge and Radar Chart** pair. The composite risk gauge draws a semicircular arc on a native HTML5 Canvas 2D rendering context, with the active arc length proportional to the computed composite score and the arc colour dynamically set to sage-green (LOW), terracotta (MEDIUM), or deep terracotta (HIGH). The radar chart draws the three dimensional sub-scores (Operational, Financial, Cybersecurity) as vertices on a triangular axis system, with concentric reference rings at 25%, 50%, 75%, and 100% providing scale context. Both charts are rendered entirely using native Canvas API calls without any external charting library dependencies.
-
-The third interactive component is the **Audit History Sidebar**, which provides a scrollable, searchable list of all previously saved assessment records. Each history node displays the project name, composite score badge with colour-coded risk tier, and creation timestamp. The sidebar supports instant text filtering on project names and provides controls for asynchronous record loading (clicking a history item repopulates the form and re-renders the analytics console) and soft deletion (clicking the delete icon removes the record from the database after user confirmation).
+The third interactive component is the Audit History Sidebar, which provides a scrollable, searchable list of all previously saved assessment records. Each history node displays the project name, composite score badge with colour-coded risk tier, and creation timestamp. The sidebar supports instant text filtering on project names and provides controls for asynchronous record loading (clicking a history item repopulates the form and re-renders the analytics console) and soft deletion (clicking the delete icon removes the record from the database after user confirmation).
 
 ## **4.4 System Testing and Results**
 
-Testing was conducted programmatically using the Python **pytest** framework (version 8.4.1), ensuring comprehensive coverage of boundary conditions, API endpoint behaviours, pricing module fallbacks, storage layer operations, and PDF report generation.
-
-101
+Testing was conducted programmatically using the Python pytest framework (version 8.4.1), ensuring comprehensive coverage of boundary conditions, API endpoint behaviours, pricing module fallbacks, storage layer operations, and PDF report generation.
 
 ## _**4.4.1 Test Suite Structure**_
 
-The test suite contains **54 distinct verification tests** organised across five test modules. The first module, **test_api.py**, contains fifteen tests that validate HTTP request handling for health check endpoints, landing page HTML serving, login page rendering, session authentication with valid and invalid credentials, dashboard redirect guards for unauthenticated users, assessment creation with thesis-aligned response fields, rejection of missing fields and non-JSON request bodies, assessment listing, retrieval, soft deletion, and PDF compliance report download endpoints.
+The test suite contains 54 distinct verification tests organised across five test modules. The first module, test_api.py, contains fifteen tests that validate HTTP request handling for health check endpoints, landing page HTML serving, login page rendering, session authentication with valid and invalid credentials, dashboard redirect guards for unauthenticated users, assessment creation with thesis-aligned response fields, rejection of missing fields and non-JSON request bodies, assessment listing, retrieval, soft deletion, and PDF compliance report download endpoints.
 
-The second module, **test_scoring.py**, contains twenty-seven tests that validate the risk scoring engine. These include verification that low-risk parameter profiles produce scores below the 40.0 threshold, high-risk profiles produce scores above 70.0, and that the result payload includes all thesis-aligned fields (composite_score, operational_score, financial_score, cybersec_score, risk_tier, monthly_est_usd, live_price_used, and recommendations). Eighteen parametrised boundary tests verify the exact inflection points of all piecewise normalisation functions: data volume at 0, 10, and 100 TB boundaries; server count at 0, 50, and 200 boundaries; migration window at 12, 24, and 48 hour boundaries; monthly cost at 2,000 and 10,000 dollar boundaries; egress volume scaling; and CapEx-OpEx delta transitions. Three additional tests verify that the engine correctly rejects negative data volumes, negative server counts, and invalid application complexity values.
+The second module, test_scoring.py, contains twenty-seven tests that validate the risk scoring engine. These include verification that low-risk parameter profiles produce scores below the 40.0 threshold, high-risk profiles produce scores above 70.0, and that the result payload includes all thesis-aligned fields (composite_score, operational_score, financial_score, cybersec_score, risk_tier, monthly_est_usd, live_price_used, and recommendations). Parametised boundary tests verify the exact inflection points of all piecewise normalisation functions: data volume at 0, 10, and 100 TB boundaries; server count at 0, 50, and 200 boundaries; migration window at 12, 24, and 48 hour boundaries; monthly cost at 2,000 and 10,000 dollar boundaries; egress volume scaling; and CapEx-OpEx delta transitions. Three additional tests verify that the engine correctly rejects negative data volumes, negative server counts, and invalid application complexity values.
 
-102
+The third module, test_pricing.py, contains five tests that validate the AWS Pricing API integration. These tests use Python's unittest.mock library to simulate Boto3 client responses, verifying successful EC2 pricing retrieval, correct handling of empty API responses with automatic fallback to cached pricing, and correct exception handling when the Boto3 client raises network or timeout errors.
 
-The third module, **test_pricing.py**, contains five tests that validate the AWS Pricing API integration. These tests use Python's unittest.mock library to simulate Boto3 client responses, verifying successful EC2 pricing retrieval, correct handling of empty API responses with automatic fallback to cached pricing, and correct exception handling when the Boto3 client raises network or timeout errors.
+The fourth module, test_store.py, contains five tests that exercise the database persistence layer. Three tests validate the SQLite backend: a lifecycle test covering record creation, retrieval, listing, and soft deletion; a test verifying that retrieval of non-existent records returns None; and a schema validation test that asserts the correct column names in the assessments table. Two additional tests use mocked Boto3 DynamoDB resource objects to verify the DynamoDB backend: a lifecycle test covering item put, scan, get, and delete operations with automatic float-to-Decimal conversion, and a table creation test that verifies the system correctly provisions the CloudRiskAssessments table when it does not yet exist.
 
-The fourth module, **test_store.py**, contains five tests that exercise the database persistence layer. Three tests validate the SQLite backend: a lifecycle test covering record creation, retrieval, listing, and soft deletion; a test verifying that retrieval of non-existent records returns None; and a schema validation test that asserts the correct column names in the assessments table. Two additional tests use mocked Boto3 DynamoDB resource objects to verify the DynamoDB backend: a lifecycle test covering item put, scan, get, and delete operations with automatic float-to-Decimal conversion, and a table creation test that verifies the system correctly provisions the CloudRiskAssessments table when it does not yet exist.
-
-The fifth module, **test_report.py**, contains two tests that validate the PDF compliance report generation module, verifying that the ReportLab canvas correctly produces a valid PDF byte stream for assessments both with and without mitigation recommendations.
-
-103
+The fifth module, test_report.py, contains two tests that validate the PDF compliance report generation module, verifying that the ReportLab canvas correctly produces a valid PDF byte stream for assessments both with and without mitigation recommendations.
 
 ## _**4.4.2 Test Verification Results**_
 
-Execution of the complete test suite returned **54 passed tests with zero failures** across all five modules. The total execution time was 16.05 seconds on a Windows 11 development environment running Python 3.12.6. Three deprecation warnings were raised by the Boto3 authentication module regarding the use of datetime.datetime.utcnow(), which is scheduled for removal in a future Python version; these warnings do not affect test correctness or system functionality and originate from the third-party Boto3 library rather than the application code.
+Execution of the complete test suite returned 54 passed tests with zero failures across all five modules. The total execution time was 16.05 seconds on a Windows 11 development environment running Python 3.12.6. Three deprecation warnings were raised by the Boto3 authentication module regarding the use of datetime.datetime.utcnow(), which is scheduled for removal in a future Python version; these warnings do not affect test correctness or system functionality and originate from the third-party Boto3 library rather than the application code.
 
 |||
 |---|---|
@@ -1713,8 +1689,6 @@ Execution of the complete test suite returned **54 passed tests with zero failur
 
 **Table 4.1: Test Suite Execution Summary**
 
-104
-
 ## **4.5 System Documentation**
 
 ## _**4.5.1 Environment Requirements**_
@@ -1727,33 +1701,30 @@ To initialise the development environment, the developer creates a Python virtua
 
 To enable live queries to the AWS Pricing and DynamoDB services, the developer must configure AWS credentials by running "aws configure" and providing a valid Access Key ID, Secret Access Key, and default region (us-east-1 is recommended for Pricing API access). If AWS credentials are not configured, the system operates in fully offline mode using cached pricing data and local SQLite storage, with no degradation in functionality other than the pricing status badge displaying "Cache (Offline)" instead of "Live".
 
-105
-
 The Flask development server is launched by executing "python -m src.cloud_risk.api" from the project root directory, or alternatively by double-clicking the provided start.bat script on Windows systems. The application serves the public landing page at http://127.0.0.1:5000 and requires authentication with the administrator credentials (username: admin, password: admin) to access the assessment dashboard at the /dashboard route.
 
 To switch the persistence backend from local SQLite to AWS DynamoDB, the developer sets the environment variable USE_DYNAMODB to true before launching the server. The system will automatically provision the CloudRiskAssessments table in the configured AWS region if it does not already exist.
 
 To generate a completely client-side, zero-server presentation version of the framework suitable for GitHub Pages deployment, the developer executes "python build_static.py" from the project root directory. This script compiles all frontend assets into a self-contained /docs directory with relative path references, client-side authentication handling, and an embedded JavaScript scoring engine that replicates the Python backend's mathematical logic entirely in the browser.
 
-106
 
-## **Chapter 5**
+## **CHAPTER FIVE**
 
 ## **CONCLUSION AND RECOMMENDATION**
+
+## **5.0 Introduction**
+
+This chapter summarizes the findings and outcomes derived from the development and deployment of the CloudRA framework. It presents the final research conclusions, details targeted recommendations for future development and academic investigation, and highlights the study's overall contributions to the computer science and IT governance domains.
 
 ## **5.1 Summary of Findings**
 
 The development and evaluation of the CloudRA system yielded several critical findings relevant to IT project management and cloud governance practice. 
 
-The first and most significant finding is the **demonstrable reduction of subjective bias** in cloud migration risk assessment. Traditional spreadsheet-based risk registers rely on qualitative, subjective ratings (typically expressed as High, Medium, or Low) that vary significantly between assessors and are influenced by individual experience, cognitive biases, and organisational pressures. The piecewise normalisation algorithms implemented in CloudRA eliminate this variability entirely; identical configuration inputs will always produce mathematically identical risk sub-scores, regardless of who conducts the assessment or when it is performed. This deterministic behaviour transforms risk assessment from a subjective exercise into a repeatable, auditable, data-driven process.
+The first and most significant finding is the demonstrable reduction of subjective bias in cloud migration risk assessment. Traditional spreadsheet-based risk registers rely on qualitative, subjective ratings (typically expressed as High, Medium, or Low) that vary significantly between assessors and are influenced by individual experience, cognitive biases, and organisational pressures. The piecewise normalisation algorithms implemented in CloudRA eliminate this variability entirely; identical configuration inputs will always produce mathematically identical risk sub-scores, regardless of who conducts the assessment or when it is performed. This deterministic behaviour transforms risk assessment from a subjective exercise into a repeatable, auditable, data-driven process.
 
-107
+The second finding relates to FinOps alignment and financial risk mitigation. The integration of the live AWS Pricing API, with automatic timeout-based fallback to cached pricing data, successfully addresses the cloud bill shock phenomenon identified in the literature review. By linking physical infrastructure scaling metrics (server count, instance type, target region) directly to real-time monetary costs, the system enables organisations to evaluate the Operational Expenditure implications of their proposed cloud deployment before any resources are provisioned. The financial risk sub-score quantifies the gap between projected cloud costs and existing on-premises capital expenditure baselines, providing finance teams and executive leadership with a clear, numerically grounded assessment of budget exposure.
 
-The second finding relates to **FinOps alignment and financial risk mitigation**. The integration of the live AWS Pricing API, with automatic timeout-based fallback to cached pricing data, successfully addresses the "cloud bill shock" phenomenon identified in the literature review. By linking physical infrastructure scaling metrics (server count, instance type, target region) directly to real-time monetary costs, the system enables organisations to evaluate the Operational Expenditure implications of their proposed cloud deployment before any resources are provisioned. The financial risk sub-score quantifies the gap between projected cloud costs and existing on-premises capital expenditure baselines, providing finance teams and executive leadership with a clear, numerically grounded assessment of budget exposure.
-
-The third finding relates to **security posture enforcement through quantified assessment**. The cybersecurity scoring dimension highlights the critical nature of IAM permissiveness and encryption posture configurations, two areas that the Cloud Security Alliance (2022) and the Verizon Data Breach Investigations Report (2023) consistently identify as the leading causes of cloud security incidents. The scoring engine translates these technical configurations into prioritised, plain-language mitigation recommendations, bridging the communication gap between development teams who configure cloud resources and IT audit stakeholders who must assess compliance.
-
-108
+The third finding relates to security posture enforcement through quantified assessment. The cybersecurity scoring dimension highlights the critical nature of IAM permissiveness and encryption posture configurations, two areas that the Cloud Security Alliance (2022) and the Verizon Data Breach Investigations Report (2023) consistently identify as the leading causes of cloud security incidents. The scoring engine translates these technical configurations into prioritised, plain-language mitigation recommendations, bridging the communication gap between development teams who configure cloud resources and IT audit stakeholders who must assess compliance.
 
 ## **5.2 Conclusion**
 
@@ -1763,33 +1734,25 @@ The CloudRA system resolves the structural limitations of manual risk registers 
 
 The system's comprehensive test suite of 54 automated tests, achieving 100% pass rates across all modules, provides confidence in the correctness of the scoring engine, the reliability of the API layer, the integrity of the persistence operations, and the validity of the generated compliance reports.
 
-109
-
 ## **5.3 Recommendations**
 
 To expand the utility of the CloudRA framework and address limitations identified during development, the following future developments are recommended.
 
-**Predictive Machine Learning Integration**: The current system provides point-in-time risk assessment based on user-submitted parameters. Future iterations should integrate regression modelling capabilities to predict future cloud billing trajectories and resource utilisation trends based on historical assessment data stored in the DynamoDB audit trail. This would enable organisations to conduct trend-based forecasting in addition to snapshot risk evaluation.
+Predictive Machine Learning Integration: The current system provides point-in-time risk assessment based on user-submitted parameters. Future iterations should integrate regression modelling capabilities to predict future cloud billing trajectories and resource utilisation trends based on historical assessment data stored in the DynamoDB audit trail. This would enable organisations to conduct trend-based forecasting in addition to snapshot risk evaluation.
 
-**Automated Infrastructure Discovery**: The current system requires users to manually input infrastructure parameters such as server count, data volume, and application complexity. Future development should implement automated discovery agents that scan corporate network landscapes using cloud provider APIs and on-premises monitoring tools to automatically populate migration parameters, reducing manual configuration effort and minimising the risk of input errors.
+Automated Infrastructure Discovery: The current system requires users to manually input infrastructure parameters such as server count, data volume, and application complexity. Future development should implement automated discovery agents that scan corporate network landscapes using cloud provider APIs and on-premises monitoring tools to automatically populate migration parameters, reducing manual configuration effort and minimising the risk of input errors.
 
-110
+AWS Organisations Governance Integration: The cybersecurity scoring dimension currently relies on user-reported IAM and encryption configurations. Future iterations should integrate directly with AWS Organisations APIs to dynamically inspect actual IAM policy boundaries, Service Control Policy (SCP) configurations, and encryption settings, comparing user-reported configurations against the actual state of the cloud environment and flagging discrepancies.
 
-**AWS Organisations Governance Integration**: The cybersecurity scoring dimension currently relies on user-reported IAM and encryption configurations. Future iterations should integrate directly with AWS Organisations APIs to dynamically inspect actual IAM policy boundaries, Service Control Policy (SCP) configurations, and encryption settings, comparing user-reported configurations against the actual state of the cloud environment and flagging discrepancies.
-
-**Multi-Cloud Provider Support**: The current implementation is designed specifically for AWS migration assessments. Future development should extend the pricing integration layer to support Microsoft Azure and Google Cloud Platform, enabling organisations to conduct comparative risk assessments across multiple cloud providers and make informed multi-cloud architecture decisions.
+Multi-Cloud Provider Support: The current implementation is designed specifically for AWS migration assessments. Future development should extend the pricing integration layer to support Microsoft Azure and Google Cloud Platform, enabling organisations to conduct comparative risk assessments across multiple cloud providers and make informed multi-cloud architecture decisions.
 
 ## **5.4 Contribution to Knowledge**
 
 This research contributes to the field of Computer Science and IT governance in the following ways.
 
-111
+Quantification Framework: The study establishes a formal, weighted piecewise normalisation methodology that models operational, financial, and cybersecurity risks under a single composite risk index. The mathematical specification of fourteen input parameters, their normalisation functions, dimensional weighting structures, and composite aggregation formula provides a reproducible, transparent risk quantification model that can be adopted, validated, and extended by other researchers and practitioners.
 
-**Quantification Framework**: The study establishes a formal, weighted piecewise normalisation methodology that models operational, financial, and cybersecurity risks under a single composite risk index. The mathematical specification of fourteen input parameters, their normalisation functions, dimensional weighting structures, and composite aggregation formula provides a reproducible, transparent risk quantification model that can be adopted, validated, and extended by other researchers and practitioners.
+Polymorphic Database Pattern: The implementation demonstrates a reliable database design pattern that switches dynamically between local SQLite storage and cloud-hosted AWS DynamoDB tables at runtime based on environment configuration. This pattern shows how cloud-scale database systems can retain high offline resilience, making them suitable for deployment contexts where continuous internet connectivity cannot be guaranteed, such as field assessments, academic demonstrations, and air-gapped compliance environments.
 
-**Polymorphic Database Pattern**: The implementation demonstrates a reliable database design pattern that switches dynamically between local SQLite storage and cloud-hosted AWS DynamoDB tables at runtime based on environment configuration. This pattern shows how cloud-scale database systems can retain high offline resilience, making them suitable for deployment contexts where continuous internet connectivity cannot be guaranteed, such as field assessments, academic demonstrations, and air-gapped compliance environments.
-
-**Auditable Artifact Generation**: The system bridges the gap between developer operations and regulatory audit processes by automating the generation of compliance-grade PDF documents compiled directly from technical configuration payloads. Each generated report contains the complete assessment input parameters, computed dimensional and composite scores, risk tier classification, and prioritised mitigation recommendations, providing a self-contained audit artifact that satisfies the documentation requirements of regulatory frameworks such as ISO 31000 and NIST SP 800-30.
-
-112
+Auditable Artifact Generation: The system bridges the gap between developer operations and regulatory audit processes by automating the generation of compliance-grade PDF documents compiled directly from technical configuration payloads. Each generated report contains the complete assessment input parameters, computed dimensional and composite scores, risk tier classification, and prioritised mitigation recommendations, providing a self-contained audit artifact that satisfies the documentation requirements of regulatory frameworks such as ISO 31000 and NIST SP 800-30.
 
