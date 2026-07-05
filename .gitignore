@@ -40,3 +40,7 @@ desktop.ini
 scratch/
 outputs/
 work/
+
+# Compiled PDFs
+*.pdf
+
